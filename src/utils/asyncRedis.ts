@@ -1,7 +1,11 @@
 import * as redis from "redis";
 import { promisify } from "util";
 
-const client = redis.createClient();
+const client = redis.createClient({
+  host: process.env.REDIS_HOST,
+  password: process.env.REDIS_PASS,
+  port: Number(process.env.REDIS_PORT),
+});
 
 export const get: (key: string) => Promise<string> = promisify(client.get).bind(
   client
