@@ -76,7 +76,7 @@ class App {
     const { MONGO_USER, MONGO_PASSWORD, MONGO_PATH, TEST } = process.env;
     const uri =
       process.env.NODE_ENV === "production"
-        ? `mongodb+srv://admin:${MONGO_PASSWORD}@cluster0.jpvmw.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+        ? `mongodb+srv://admin:${MONGO_PASSWORD}@cluster0.nujhv.mongodb.net/bidboom?retryWrites=true&w=majority`
         : `mongodb://${MONGO_PATH}/${TEST ? "bidroom-test" : "bidroom"}`;
     mongoose.connect(uri, {
       useNewUrlParser: true,
