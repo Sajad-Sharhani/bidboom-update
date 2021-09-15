@@ -1,0 +1,8 @@
+{
+  "verbose": true,
+  "ignore": ["*.test.js", "fixtures/*", "./.files/*"],
+  "execMap": {
+    "ts": "kill -9 $(lsof -t -i:8080) ; esmo --no-warnings"
+  },
+  "ext": "js ts env tsx json css styl jade"
+}

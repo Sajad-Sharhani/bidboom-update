@@ -1,0 +1,12 @@
+# schema: ./src/schema/schema.graphql
+generates:
+  ./src/schema/user.ts:
+    schema: ./src/schema/user.graphql
+    plugins:
+      - typescript
+      - typescript-resolvers
+  ./src/schema/upload.ts:
+    schema: ./src/schema/upload.graphql
+    plugins:
+      - typescript
+      - typescript-resolvers

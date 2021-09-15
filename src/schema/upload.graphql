@@ -1,0 +1,23 @@
+scalar Upload
+
+type File {
+  name: String!
+  src: String!
+}
+
+type Files {
+  files: [File]!
+}
+
+input FilesInput {
+  files: [Upload!]!
+  names: [String!]!
+}
+
+extend type Query {
+  getUpload: Files!
+}
+
+extend type Mutation {
+  upload(input: FilesInput!): Files!
+}

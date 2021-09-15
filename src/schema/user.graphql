@@ -1,0 +1,130 @@
+enum GuideType {
+  LOCAL
+  NATIONAL
+}
+
+enum Expertise {
+  CULTURAL
+  NATURE
+}
+
+enum UserType {
+  Ambassador
+  User
+}
+
+interface User {
+  _id: ID!
+  name: String!
+  userName: String
+  email: String
+  phoneNumber: String
+  image: String
+  description: String
+  usersOfIdentifierCode: [String]!
+  identifierCode: String
+  type: UserType!
+
+  nationalCode: String
+  instagram: String
+  touristGuideCard: String
+  guideType: GuideType
+  expertise: Expertise
+}
+
+type Response {
+  _id: ID!
+  token: String!
+  type: UserType!
+}
+
+input CreateUserInput {
+  name: String!
+  userName: String
+  email: String
+  phoneNumber: String
+  image: String
+  description: String
+  identifierCode: String
+  code: String!
+}
+
+input MakeAmbassadorInput {
+  _id: ID!
+  nationalCode: String!
+  instagram: String
+  touristGuideCard: String!
+  guideType: GuideType!
+  expertise: Expertise!
+}
+
+input MutateUserInput {
+  _id: ID!
+  name: String
+  userName: String
+  email: String
+  phoneNumber: String
+  image: String
+  description: String
+}
+
+input MutateAmbassadorInput {
+  _id: ID!
+  nationalCode: String
+  instagram: String
+  touristGuideCard: String
+  guideType: GuideType
+  expertise: Expertise
+}
+
+input SendCodeInput {
+  email: String
+  phoneNumber: String
+}
+
+type Entries {
+  messageid: Int
+  message: String
+  status: Int
+  statustext: String
+  sender: String
+  receptor: String
+  date: Int
+  cost: Int
+}
+
+type SmsResponse {
+  status: Int!
+  message: String!
+}
+
+type SendCodeResponse {
+  sms: SmsResponse
+}
+
+type GoogleRedirectResponse {
+  url: String!
+}
+
+type CreateGoogleUserResponse {
+  name: String!
+  email: String!
+  image: String!
+  _id: ID!
+  token: String!
+  type: UserType!
+}
+
+extend type Query {
+  "input is `redirect` url that google redirects to, with a string"
+  getGoogleRedirect(input: String): GoogleRedirectResponse!
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput!): Response!
+  makeAmbassador(input: MakeAmbassadorInput!): Response!
+  sendCode(input: SendCodeInput!): SendCodeResponse!
+  createGoogleUser(input: String!): CreateGoogleUserResponse!
+  mutateUser(input: MutateUserInput): Response!
+  mutateAmbassador(input: MutateAmbassadorInput): Response!
+}
