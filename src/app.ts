@@ -51,6 +51,8 @@ class App {
   private initializeControllers(resolvers: Resolvers) {
     const schema = makeExecutableSchema({ typeDefs });
 
+    this.app.use("/", (_, res) => res.send("Hello to bidboom"));
+
     this.app.use(
       "/graphql",
       graphqlUploadExpress(),
