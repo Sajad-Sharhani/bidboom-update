@@ -13,6 +13,11 @@ enum UserType {
   User
 }
 
+enum Registerations {
+  Email
+  PhoneNumber
+}
+
 interface User {
   _id: ID!
   name: String!
@@ -23,7 +28,9 @@ interface User {
   description: String
   usersOfIdentifierCode: [String]!
   identifierCode: String
+  ICUsers: [ID]!
   type: UserType!
+  registerations: Registerations
 
   nationalCode: String
   instagram: String
@@ -39,24 +46,20 @@ type Response {
 }
 
 input CreateUserInput {
-  name: String!
-  userName: String
   email: String
   phoneNumber: String
-  image: String
-  description: String
-  identifierCode: String
   code: String!
+  type: UserType!
 }
 
-input MakeAmbassadorInput {
-  _id: ID!
-  nationalCode: String!
-  instagram: String
-  touristGuideCard: String!
-  guideType: GuideType!
-  expertise: Expertise!
-}
+# input MakeAmbassadorInput {
+#   _id: ID!
+#   nationalCode: String!
+#   instagram: String
+#   touristGuideCard: String!
+#   guideType: GuideType!
+#   expertise: Expertise!
+# }
 
 input MutateUserInput {
   _id: ID!
@@ -66,10 +69,19 @@ input MutateUserInput {
   phoneNumber: String
   image: String
   description: String
+  identifierCode: String
 }
 
 input MutateAmbassadorInput {
   _id: ID!
+  name: String
+  userName: String
+  email: String
+  phoneNumber: String
+  image: String
+  description: String
+  identifierCode: String
+
   nationalCode: String
   instagram: String
   touristGuideCard: String
@@ -115,14 +127,34 @@ type CreateGoogleUserResponse {
   type: UserType!
 }
 
+type GetUserInfoResponse {
+  _id: ID!
+  name: String!
+  userName: String
+  email: String
+  phoneNumber: String
+  image: String
+  description: String
+  usersOfIdentifierCode: [String]!
+  identifierCode: String
+  ICUsers: [ID]!
+  type: UserType!
+
+  nationalCode: String
+  instagram: String
+  touristGuideCard: String
+  guideType: GuideType
+  expertise: Expertise
+}
+
 extend type Query {
   "input is `redirect` url that google redirects to, with a string"
   getGoogleRedirect(input: String): GoogleRedirectResponse!
+  getUserInfo(input: ID!): GetUserInfoResponse!
 }
 
 extend type Mutation {
   createUser(input: CreateUserInput!): Response!
-  makeAmbassador(input: MakeAmbassadorInput!): Response!
   sendCode(input: SendCodeInput!): SendCodeResponse!
   createGoogleUser(input: String!): CreateGoogleUserResponse!
   mutateUser(input: MutateUserInput): Response!

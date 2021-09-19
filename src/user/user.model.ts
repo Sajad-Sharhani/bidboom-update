@@ -19,6 +19,8 @@ const userSchema = new mongoose.Schema(
     touristGuideCard: StringNonRequired,
     guideType: StringNonRequired,
     expertise: StringNonRequired,
+    registerations: StringNonRequired,
+    ICUsers: { type: Array, required: false },
   },
   {
     toJSON: {

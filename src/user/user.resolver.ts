@@ -9,6 +9,8 @@ import {
   MutationCreateGoogleUserArgs,
   MutateUserInput,
   MutateAmbassadorInput,
+  QueryGetUserInfoArgs,
+  Registerations,
 } from "../schema/user";
 import * as redis from "../utils/asyncRedis";
 import { getToken, getUnique } from "../utils/hash";
@@ -29,7 +31,7 @@ const getGoogleRedirect: QueryResolvers["getGoogleRedirect"] = async ({
 const THREE_MINS = 3 * 60;
 
 const createUser: MutationResolvers["createUser"] = async ({
-  input: { identifierCode, ...userData },
+  input: { ...userData },
 }: {
   input: CreateUserInput;
 }) => {
@@ -49,16 +51,22 @@ const createUser: MutationResolvers["createUser"] = async ({
   if (!user) {
     user = await userModel.create({
       ...userData,
-      identifierCode: await getUnique(userData.name),
-      type: UserType["User"],
-    });
-  } else {
-    await user.update({
-      ...userData,
+      identifierCode: await getUnique(userData.phoneNumber || userData.email),
+      ICUsers: [],
+      type: userData.type || UserType["User"],
+      registerations: userData.phoneNumber
+        ? Registerations["PhoneNumber"]
+        : Registerations["Email"],
     });
   }
 
   return { token: await getToken(user._id), type: user.type, _id: user._id };
+};
+const resolveIdentifierCode = async (identifierCode: string, _id: any) => {
+  Promise.resolve().then(async () => {
+    const hostUser = await userModel.findOne({ identifierCode });
+    hostUser.update({ ICUsers: [...(hostUser.ICUsers || []), _id] });
+  });
 };
 
 const sendCode: MutationResolvers["sendCode"] = async ({
@@ -97,19 +105,19 @@ const sendCode: MutationResolvers["sendCode"] = async ({
   return {};
 };
 
-const makeAmbassador: MutationResolvers["makeAmbassador"] = async ({
-  input: { _id, ...userData },
-}: {
-  input: MakeAmbassadorInput;
-}) => {
-  let user = await userModel.findById(_id);
-  if (!user) {
-    throw new Error("there's no user with _id");
-  }
-  await user.update({ ...userData, type: UserType["Ambassador"] });
-
-  return { token: await getToken(user._id), type: UserType["Ambassador"], _id };
-};
+// const makeAmbassador: MutationResolvers["makeAmbassador"] = async ({
+//   input: { _id, ...userData },
+// }: {
+//   input: MakeAmbassadorInput;
+// }) => {
+//   let user = await userModel.findById(_id);
+//   if (!user) {
+//     throw new Error("there's no user with _id");
+//   }
+//   await user.update({ ...userData, type: UserType["Ambassador"] });
+//
+//   return { token: await getToken(user._id), type: UserType["Ambassador"], _id };
+// };
 
 const mutateUser: MutationResolvers["mutateUser"] = async ({
   input: userData,
@@ -125,6 +133,7 @@ const mutateUser: MutationResolvers["mutateUser"] = async ({
       ...userData,
     });
   }
+  resolveIdentifierCode(userData.identifierCode, user._id);
 
   return {
     ...userData,
@@ -150,6 +159,7 @@ const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
       ...userData,
     });
   }
+  resolveIdentifierCode(userData.identifierCode, user._id);
 
   return {
     ...userData,
@@ -190,12 +200,23 @@ const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
   };
 };
 
+const getUserInfo: QueryResolvers["getUserInfo"] = async ({
+  input: _id,
+}: QueryGetUserInfoArgs) => {
+  let user = await userModel.findById(_id);
+
+  if (!user) {
+    throw new Error("no user");
+  }
+  return user.toObject();
+};
 export const resolvers: MutationResolvers | QueryResolvers = {
   createUser,
   sendCode,
-  makeAmbassador,
+  // makeAmbassador,
   getGoogleRedirect,
   createGoogleUser,
   mutateUser,
   mutateAmbassador,
+  getUserInfo,
 };

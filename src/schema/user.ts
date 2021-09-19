@@ -24,14 +24,10 @@ export type CreateGoogleUserResponse = {
 };
 
 export type CreateUserInput = {
-  name: Scalars['String'];
-  userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
-  image?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
-  identifierCode?: Maybe<Scalars['String']>;
   code: Scalars['String'];
+  type: UserType;
 };
 
 export type Entries = {
@@ -51,6 +47,26 @@ export enum Expertise {
   Nature = 'NATURE'
 }
 
+export type GetUserInfoResponse = {
+  __typename?: 'GetUserInfoResponse';
+  _id: Scalars['ID'];
+  name: Scalars['String'];
+  userName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  usersOfIdentifierCode: Array<Maybe<Scalars['String']>>;
+  identifierCode?: Maybe<Scalars['String']>;
+  ICUsers: Array<Maybe<Scalars['ID']>>;
+  type: UserType;
+  nationalCode?: Maybe<Scalars['String']>;
+  instagram?: Maybe<Scalars['String']>;
+  touristGuideCard?: Maybe<Scalars['String']>;
+  guideType?: Maybe<GuideType>;
+  expertise?: Maybe<Expertise>;
+};
+
 export type GoogleRedirectResponse = {
   __typename?: 'GoogleRedirectResponse';
   url: Scalars['String'];
@@ -61,17 +77,15 @@ export enum GuideType {
   National = 'NATIONAL'
 }
 
-export type MakeAmbassadorInput = {
-  _id: Scalars['ID'];
-  nationalCode: Scalars['String'];
-  instagram?: Maybe<Scalars['String']>;
-  touristGuideCard: Scalars['String'];
-  guideType: GuideType;
-  expertise: Expertise;
-};
-
 export type MutateAmbassadorInput = {
   _id: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  userName?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  identifierCode?: Maybe<Scalars['String']>;
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -87,12 +101,12 @@ export type MutateUserInput = {
   phoneNumber?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  identifierCode?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
   createUser: Response;
-  makeAmbassador: Response;
   sendCode: SendCodeResponse;
   createGoogleUser: CreateGoogleUserResponse;
   mutateUser: Response;
@@ -102,11 +116,6 @@ export type Mutation = {
 
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
-};
-
-
-export type MutationMakeAmbassadorArgs = {
-  input: MakeAmbassadorInput;
 };
 
 
@@ -133,12 +142,23 @@ export type Query = {
   __typename?: 'Query';
   /** input is `redirect` url that google redirects to, with a string */
   getGoogleRedirect: GoogleRedirectResponse;
+  getUserInfo: GetUserInfoResponse;
 };
 
 
 export type QueryGetGoogleRedirectArgs = {
   input?: Maybe<Scalars['String']>;
 };
+
+
+export type QueryGetUserInfoArgs = {
+  input: Scalars['ID'];
+};
+
+export enum Registerations {
+  Email = 'Email',
+  PhoneNumber = 'PhoneNumber'
+}
 
 export type Response = {
   __typename?: 'Response';
@@ -173,7 +193,9 @@ export type User = {
   description?: Maybe<Scalars['String']>;
   usersOfIdentifierCode: Array<Maybe<Scalars['String']>>;
   identifierCode?: Maybe<Scalars['String']>;
+  ICUsers: Array<Maybe<Scalars['ID']>>;
   type: UserType;
+  registerations?: Maybe<Registerations>;
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -271,13 +293,14 @@ export type ResolversTypes = {
   Entries: ResolverTypeWrapper<Entries>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Expertise: Expertise;
+  GetUserInfoResponse: ResolverTypeWrapper<GetUserInfoResponse>;
   GoogleRedirectResponse: ResolverTypeWrapper<GoogleRedirectResponse>;
   GuideType: GuideType;
-  MakeAmbassadorInput: MakeAmbassadorInput;
   MutateAmbassadorInput: MutateAmbassadorInput;
   MutateUserInput: MutateUserInput;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  Registerations: Registerations;
   Response: ResolverTypeWrapper<Response>;
   SendCodeInput: SendCodeInput;
   SendCodeResponse: ResolverTypeWrapper<SendCodeResponse>;
@@ -295,8 +318,8 @@ export type ResolversParentTypes = {
   CreateUserInput: CreateUserInput;
   Entries: Entries;
   Int: Scalars['Int'];
+  GetUserInfoResponse: GetUserInfoResponse;
   GoogleRedirectResponse: GoogleRedirectResponse;
-  MakeAmbassadorInput: MakeAmbassadorInput;
   MutateAmbassadorInput: MutateAmbassadorInput;
   MutateUserInput: MutateUserInput;
   Mutation: {};
@@ -331,6 +354,26 @@ export type EntriesResolvers<ContextType = any, ParentType extends ResolversPare
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type GetUserInfoResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetUserInfoResponse'] = ResolversParentTypes['GetUserInfoResponse']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  phoneNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  usersOfIdentifierCode?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  guideType?: Resolver<Maybe<ResolversTypes['GuideType']>, ParentType, ContextType>;
+  expertise?: Resolver<Maybe<ResolversTypes['Expertise']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type GoogleRedirectResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GoogleRedirectResponse'] = ResolversParentTypes['GoogleRedirectResponse']> = {
   url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -338,7 +381,6 @@ export type GoogleRedirectResponseResolvers<ContextType = any, ParentType extend
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createUser?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, 'input'>>;
-  makeAmbassador?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationMakeAmbassadorArgs, 'input'>>;
   sendCode?: Resolver<ResolversTypes['SendCodeResponse'], ParentType, ContextType, RequireFields<MutationSendCodeArgs, 'input'>>;
   createGoogleUser?: Resolver<ResolversTypes['CreateGoogleUserResponse'], ParentType, ContextType, RequireFields<MutationCreateGoogleUserArgs, 'input'>>;
   mutateUser?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationMutateUserArgs, never>>;
@@ -347,6 +389,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getGoogleRedirect?: Resolver<ResolversTypes['GoogleRedirectResponse'], ParentType, ContextType, RequireFields<QueryGetGoogleRedirectArgs, never>>;
+  getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
 };
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = {
@@ -378,7 +421,9 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   usersOfIdentifierCode?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
   identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  registerations?: Resolver<Maybe<ResolversTypes['Registerations']>, ParentType, ContextType>;
   nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -389,6 +434,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   CreateGoogleUserResponse?: CreateGoogleUserResponseResolvers<ContextType>;
   Entries?: EntriesResolvers<ContextType>;
+  GetUserInfoResponse?: GetUserInfoResponseResolvers<ContextType>;
   GoogleRedirectResponse?: GoogleRedirectResponseResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
