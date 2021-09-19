@@ -1,6 +1,5 @@
 import {
   CreateUserInput,
-  MakeAmbassadorInput,
   MutationResolvers,
   SendCodeInput,
   UserType,
