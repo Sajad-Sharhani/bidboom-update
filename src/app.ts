@@ -7,6 +7,8 @@ import type {
   // QueryResolvers as AmbassadorQueryResolvers,
   MutationResolvers as UserMutationResolvers,
 } from "./schema/user";
+import userModel from "./user/user.model";
+import { verifyToken } from "./utils/hash";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { altairExpress } from "altair-express-middleware";
 import cookieParser from "cookie-parser";
@@ -51,11 +53,27 @@ class App {
   private initializeControllers(resolvers: Resolvers) {
     const schema = makeExecutableSchema({ typeDefs });
 
+    this.app.use((req, res, next) => {
+      let header = req.headers["authorization"] || "";
+      const [, token] = header.split(" ");
+      if (token) {
+        const { id } = verifyToken(token);
+        if (!id) {
+          return next();
+        }
+        (req as any)['_id'] = id
+      }
+      return next();
+    });
+
     this.app.use(
       "/graphql",
       graphqlUploadExpress(),
-      graphqlHTTP(() => ({
+      graphqlHTTP((req) => ({
         schema,
+        context: {
+          _id: (req as any)['_id']
+        },
         rootValue: {
           ...resolvers,
           Upload: GraphQLUpload,

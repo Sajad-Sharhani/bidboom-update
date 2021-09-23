@@ -1,0 +1,161 @@
+enum SuitableCar {
+  RidingCar
+  Motorcycle
+  Offroad
+  Bike
+}
+
+enum SuitablePeople {
+  Blind
+  Deaf
+  Wheelchairs
+}
+
+enum Facilities {
+  Market
+  Restaurant
+  Park
+  GasStation
+}
+
+enum PlaceKind {
+  CULTURAL
+  NATURE
+}
+
+enum PlaceRecord {
+  National
+  International
+  None
+}
+
+type File_path {
+  name: String!
+  src: String!
+}
+input File_pathInput {
+  name: String!
+  src: String!
+}
+
+# same as Files, but for hacking the generator
+type Files_path {
+  files: [File_path]!
+}
+
+input Files_pathInput {
+  files: [File_pathInput]!
+}
+
+type Place {
+  kind: PlaceKind
+  description: String
+  map: String
+  record: PlaceRecord
+  media: Files_path
+}
+
+input PlaceInput {
+  kind: PlaceKind
+  description: String
+  map: String
+  record: PlaceRecord
+  media: Files_pathInput
+}
+
+interface Path {
+  _id: ID!
+  maker: ID!
+  origin: String!
+  destination: String!
+  title: String!
+  # jan/farvardin: 0, feb/...: 1, ..., 11
+  bestTime: [Int!]!
+  # low:1, ..., dangerous:3
+  dangerRate: Int!
+  suitableCar: SuitableCar!
+  interestingPlaces: Int!
+  placeMap: String!
+  suitablePeople: SuitablePeople!
+  facilities: Facilities!
+  # photos/videos/...
+  media: Files_path!
+  places: [Place]!
+}
+type PathType {
+  _id: ID!
+  maker: ID!
+  origin: String!
+  destination: String!
+  title: String!
+  # jan/farvardin: 0, feb/...: 1, ..., 11
+  bestTime: [Int!]!
+  # low:1, ..., dangerous:3
+  dangerRate: Int!
+  suitableCar: SuitableCar!
+  interestingPlaces: Int!
+  placeMap: String!
+  suitablePeople: SuitablePeople!
+  facilities: Facilities!
+  # photos/videos/...
+  media: Files_path!
+  places: [Place]!
+}
+
+input CreatePathInput {
+  origin: String!
+  destination: String!
+  title: String!
+  # jan/farvardin: 0, feb/...: 1, ..., 11
+  bestTime: [Int!]!
+  # low:1, ..., dangerous:3
+  dangerRate: Int!
+  suitableCar: SuitableCar!
+  interestingPlaces: Int!
+  placeMap: String!
+  suitablePeople: SuitablePeople!
+  facilities: Facilities!
+  # photos/videos/...
+  media: Files_pathInput!
+  places: [PlaceInput]!
+}
+
+input MutatePathInput {
+  _id: ID!
+  origin: String!
+  destination: String!
+  title: String!
+  # jan/farvardin: 0, feb/...: 1, ..., 11
+  bestTime: [Int!]!
+  # low:1, ..., dangerous:3
+  dangerRate: Int!
+  suitableCar: SuitableCar!
+  interestingPlaces: Int!
+  placeMap: String!
+  suitablePeople: SuitablePeople!
+  facilities: Facilities!
+  # photos/videos/...
+  media: Files_pathInput!
+  places: [PlaceInput]!
+}
+
+type CreatePathResponse {
+  _id: ID!
+}
+
+type DeletePathResponse {
+  done: Boolean!
+}
+
+extend type Query {
+  # path id
+  getPath(input: ID!): PathType!
+  # user id
+  getPaths(input: ID!): [PathType!]!
+}
+
+extend type Mutation {
+  createPath(input: CreatePathInput!): CreatePathResponse!
+  mutatePath(input: MutatePathInput!): CreatePathResponse!
+  deletePath(input: ID!): DeletePathResponse!
+}

@@ -1,4 +1,5 @@
 import App from "./app";
+import { resolvers as pathResolvers } from "./path/path.resolver";
 import { upload } from "./upload/upload.resolver";
 import { resolvers as userResolvers } from "./user/user.resolver";
 import validateEnv from "./utils/validateEnv";
@@ -11,11 +12,12 @@ validateEnv();
 export const app = () =>
   new App({
     ...userResolvers,
+    ...pathResolvers,
     upload,
     // createUser,
     // joinAmbassador,
   });
 
-if (!process.env.TEST) {
+// if (!process.env.TEST) {
   app().listen();
-}
+// }

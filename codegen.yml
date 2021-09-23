@@ -10,3 +10,8 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
+  ./src/schema/path.ts:
+    schema: ./src/schema/path.graphql
+    plugins:
+      - typescript
+      - typescript-resolvers

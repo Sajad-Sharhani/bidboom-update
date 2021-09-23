@@ -1,6 +1,6 @@
-import uniqid from 'uniqid'
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import uniqid from "uniqid";
 
 const { JWT_SECRET } = process.env;
 
@@ -13,9 +13,15 @@ export const compare = async (input: string, original: string) => {
 };
 
 export const getToken = async (id: string) => {
-  return jwt.sign({ id }, JWT_SECRET || 'Test', {
+  return jwt.sign({ id }, JWT_SECRET || "Test", {
     expiresIn: 60 * 60 * 60 * 60,
   });
 };
 
-export const getUnique = async (str: string) => uniqid(str)
+export const verifyToken = (token: string) => {
+  return (jwt.verify(token, JWT_SECRET || "Test") || { id: null }) as {
+    id: string | null;
+  };
+};
+
+export const getUnique = async (str: string) => uniqid(str);
