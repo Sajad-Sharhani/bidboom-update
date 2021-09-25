@@ -4,9 +4,6 @@
   "type": "module",
   "description": "",
   "main": "dist/server.js",
-  "engines": {
-    "node": "16.x.x"
-  },
   "dependencies": {
     "@apollo/client": "^3.4.10",
     "@graphql-tools/graphql-file-loader": "^6.2.7",
