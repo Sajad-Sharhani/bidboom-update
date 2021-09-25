@@ -82,11 +82,11 @@
     "ts-jest": "^27.0.5"
   },
   "scripts": {
-    "dev": "rm -rf .env && cp .env_dev .env && concurrently \"graphql-codegen -w\" \"nodemon src/server.ts --config=nodemon.json\" ",
+    "dev": "concurrently \"graphql-codegen -w\" \"nodemon src/server.ts --config=nodemon.json\" ",
     "format": "prettier --write src/*/*",
     "test": "yarn run build && TEST=1 node --no-warnings --experimental-specifier-resolution=node --experimental-vm-modules node_modules/.bin/jest --detectOpenHandles",
     "build": "tsc",
-    "start": "rm -rf .env && cp .env_prod .env && node --experimental-specifier-resolution=node dist/server.js"
+    "start": "NODE_ENV=production node --experimental-specifier-resolution=node dist/server.js"
   },
   "author": "M. Bagher Abiat",
   "license": "MIT",
