@@ -3,6 +3,6 @@
   "app": "bidboom",
   "port": 8080,
   "node": {
-    "version": "16"
+    "version": "latest"
   }
 }
