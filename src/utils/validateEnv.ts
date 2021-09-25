@@ -2,7 +2,7 @@ import envalid from "envalid";
 
 function validateEnv() {
   envalid.cleanEnv(process.env, {
-    JWT_SECRET: envalid.str(),
+    // JWT_SECRET: envalid.str(),
     // MONGO_PASSWORD: envalid.str(),
     // MONGO_PATH: envalid.str(),
     // MONGO_USER: envalid.str(),

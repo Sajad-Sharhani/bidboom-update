@@ -91,6 +91,7 @@ class App {
   }
 
   private connectToTheDatabase() {
+    console.log(process.env)
     const { DATABASE_URL, MONGO_PATH, TEST } = process.env;
     const uri =
       process.env.NODE_ENV === "production"
