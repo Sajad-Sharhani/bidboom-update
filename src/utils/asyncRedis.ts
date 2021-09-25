@@ -3,7 +3,7 @@ import { promisify } from "util";
 
 const client = redis.createClient({
   host: process.env.REDIS_HOST,
-  password: process.env.REDIS_PASS,
+  password: process.env.REDIS_PASSWORD,
   port: Number(process.env.REDIS_PORT),
 });
 
