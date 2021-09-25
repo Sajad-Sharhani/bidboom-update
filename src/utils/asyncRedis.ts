@@ -6,22 +6,31 @@ import { promisify } from "util";
 //   password: process.env.REDIS_PASS,
 //   port: Number(process.env.REDIS_PORT),
 // });
-const client = redis.createClient(
-  Number(process.env.REDIS_PORT),
-  process.env.REDIS_HOST
-);
-client.auth(process.env.REDIS_PASS);
+let cache: redis.RedisClient;
 
-export const get: (key: string) => Promise<string> = promisify(client.get).bind(
-  client
-);
+const getClient = () => {
+  if (cache) return cache;
 
-export const set: (key: string, value: string) => Promise<string> = promisify(
-  client.set
-).bind(client);
+  const client = redis.createClient(
+    Number(process.env.REDIS_PORT),
+    process.env.REDIS_HOST
+  );
+  client.auth(process.env.REDIS_PASS);
+
+  return (cache = client);
+};
+
+export const get: (key: string) => Promise<string> = (key) =>
+  promisify(getClient().get).bind(getClient())(key);
+
+export const set: (key: string, value: string) => Promise<string> = (
+  key,
+  value
+) => promisify(getClient().set).bind(getClient())(key, value);
 
 export const setex: (
   key: string,
   seconds: number,
   value: string
-) => Promise<string> = promisify(client.setex).bind(client);
+) => Promise<string> = (key, seconds, value) =>
+  promisify(getClient().setex).bind(getClient())(key, seconds, value);
