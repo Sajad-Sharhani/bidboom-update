@@ -5,7 +5,7 @@
   "description": "",
   "main": "dist/server.js",
   "engines": {
-    "node": "16.5.x"
+    "node": "16.x.x"
   },
   "dependencies": {
     "@apollo/client": "^3.4.10",
