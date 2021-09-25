@@ -90,6 +90,7 @@
     "format": "prettier --config=.prettierrc --write src/*/*",
     "test": "yarn run build && TEST=1 node --no-warnings --experimental-specifier-resolution=node --experimental-vm-modules node_modules/.bin/jest --detectOpenHandles",
     "build": "tsc",
+    "postbuild": "yarn run start",
     "start": "NODE_ENV=production node --experimental-specifier-resolution=node dist/server.js"
   },
   "author": "M. Bagher Abiat",
