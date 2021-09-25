@@ -1,0 +1,5 @@
+{
+  "platform": "node",
+  "app": "bidboom",
+  "port": 8080 
+}

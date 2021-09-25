@@ -61,7 +61,7 @@ class App {
         if (!id) {
           return next();
         }
-        (req as any)['_id'] = id
+        (req as any)["_id"] = id;
       }
       return next();
     });
@@ -72,7 +72,7 @@ class App {
       graphqlHTTP((req) => ({
         schema,
         context: {
-          _id: (req as any)['_id']
+          _id: (req as any)["_id"],
         },
         rootValue: {
           ...resolvers,
@@ -91,10 +91,10 @@ class App {
   }
 
   private connectToTheDatabase() {
-    const { MONGO_PASSWORD, MONGO_PATH, TEST } = process.env;
+    const { DATABASE_URL, MONGO_PATH, TEST } = process.env;
     const uri =
       process.env.NODE_ENV === "production"
-        ? `mongodb+srv://user:${MONGO_PASSWORD}@cluster0.nujhv.mongodb.net/bidboom?retryWrites=true&w=majority`
+        ? `${DATABASE_URL}`
         : `mongodb://${MONGO_PATH}/${TEST ? "bidroom-test" : "bidroom"}`;
     mongoose.connect(uri, {
       useNewUrlParser: true,
