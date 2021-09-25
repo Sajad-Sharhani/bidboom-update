@@ -3,7 +3,7 @@ import fs from "fs";
 
 const schemas = glob.sync("**.graphql");
 
-const typeDefs = schemas.map((file) => fs.readFileSync(file, 'utf-8'));
+const typeDefs = schemas.map((file) => fs.readFileSync(file, "utf-8"));
 
 const defaultTypeDef = `
   type Query {
@@ -13,6 +13,6 @@ const defaultTypeDef = `
   type Mutation {
     _version_mutation: String
   }
-`
+`;
 
-export default [defaultTypeDef,...typeDefs];
+export default [defaultTypeDef, ...typeDefs];

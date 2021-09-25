@@ -1,9 +1,18 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo } from "graphql";
+
 export type Maybe<T> = T | null;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
+export type Exact<T extends { [key: string]: unknown }> = {
+  [K in keyof T]: T[K];
+};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]?: Maybe<T[SubKey]>;
+};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
+  [SubKey in K]: Maybe<T[SubKey]>;
+};
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -14,14 +23,14 @@ export type Scalars = {
 };
 
 export type CreatePathInput = {
-  origin: Scalars['String'];
-  destination: Scalars['String'];
-  title: Scalars['String'];
-  bestTime: Array<Scalars['Int']>;
-  dangerRate: Scalars['Int'];
+  origin: Scalars["String"];
+  destination: Scalars["String"];
+  title: Scalars["String"];
+  bestTime: Array<Scalars["Int"]>;
+  dangerRate: Scalars["Int"];
   suitableCar: SuitableCar;
-  interestingPlaces: Scalars['Int'];
-  placeMap: Scalars['String'];
+  interestingPlaces: Scalars["Int"];
+  placeMap: Scalars["String"];
   suitablePeople: SuitablePeople;
   facilities: Facilities;
   media: Files_PathInput;
@@ -29,35 +38,35 @@ export type CreatePathInput = {
 };
 
 export type CreatePathResponse = {
-  __typename?: 'CreatePathResponse';
-  _id: Scalars['ID'];
+  __typename?: "CreatePathResponse";
+  _id: Scalars["ID"];
 };
 
 export type DeletePathResponse = {
-  __typename?: 'DeletePathResponse';
-  done: Scalars['Boolean'];
+  __typename?: "DeletePathResponse";
+  done: Scalars["Boolean"];
 };
 
 export enum Facilities {
-  Market = 'Market',
-  Restaurant = 'Restaurant',
-  Park = 'Park',
-  GasStation = 'GasStation'
+  Market = "Market",
+  Restaurant = "Restaurant",
+  Park = "Park",
+  GasStation = "GasStation",
 }
 
 export type File_Path = {
-  __typename?: 'File_path';
-  name: Scalars['String'];
-  src: Scalars['String'];
+  __typename?: "File_path";
+  name: Scalars["String"];
+  src: Scalars["String"];
 };
 
 export type File_PathInput = {
-  name: Scalars['String'];
-  src: Scalars['String'];
+  name: Scalars["String"];
+  src: Scalars["String"];
 };
 
 export type Files_Path = {
-  __typename?: 'Files_path';
+  __typename?: "Files_path";
   files: Array<Maybe<File_Path>>;
 };
 
@@ -66,15 +75,15 @@ export type Files_PathInput = {
 };
 
 export type MutatePathInput = {
-  _id: Scalars['ID'];
-  origin: Scalars['String'];
-  destination: Scalars['String'];
-  title: Scalars['String'];
-  bestTime: Array<Scalars['Int']>;
-  dangerRate: Scalars['Int'];
+  _id: Scalars["ID"];
+  origin: Scalars["String"];
+  destination: Scalars["String"];
+  title: Scalars["String"];
+  bestTime: Array<Scalars["Int"]>;
+  dangerRate: Scalars["Int"];
   suitableCar: SuitableCar;
-  interestingPlaces: Scalars['Int'];
-  placeMap: Scalars['String'];
+  interestingPlaces: Scalars["Int"];
+  placeMap: Scalars["String"];
   suitablePeople: SuitablePeople;
   facilities: Facilities;
   media: Files_PathInput;
@@ -82,38 +91,35 @@ export type MutatePathInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
+  __typename?: "Mutation";
   createPath: CreatePathResponse;
   mutatePath: CreatePathResponse;
   deletePath: DeletePathResponse;
 };
 
-
 export type MutationCreatePathArgs = {
   input: CreatePathInput;
 };
-
 
 export type MutationMutatePathArgs = {
   input: MutatePathInput;
 };
 
-
 export type MutationDeletePathArgs = {
-  input: Scalars['ID'];
+  input: Scalars["ID"];
 };
 
 export type Path = {
-  _id: Scalars['ID'];
-  maker: Scalars['ID'];
-  origin: Scalars['String'];
-  destination: Scalars['String'];
-  title: Scalars['String'];
-  bestTime: Array<Scalars['Int']>;
-  dangerRate: Scalars['Int'];
+  _id: Scalars["ID"];
+  maker: Scalars["ID"];
+  origin: Scalars["String"];
+  destination: Scalars["String"];
+  title: Scalars["String"];
+  bestTime: Array<Scalars["Int"]>;
+  dangerRate: Scalars["Int"];
   suitableCar: SuitableCar;
-  interestingPlaces: Scalars['Int'];
-  placeMap: Scalars['String'];
+  interestingPlaces: Scalars["Int"];
+  placeMap: Scalars["String"];
   suitablePeople: SuitablePeople;
   facilities: Facilities;
   media: Files_Path;
@@ -121,17 +127,17 @@ export type Path = {
 };
 
 export type PathType = {
-  __typename?: 'PathType';
-  _id: Scalars['ID'];
-  maker: Scalars['ID'];
-  origin: Scalars['String'];
-  destination: Scalars['String'];
-  title: Scalars['String'];
-  bestTime: Array<Scalars['Int']>;
-  dangerRate: Scalars['Int'];
+  __typename?: "PathType";
+  _id: Scalars["ID"];
+  maker: Scalars["ID"];
+  origin: Scalars["String"];
+  destination: Scalars["String"];
+  title: Scalars["String"];
+  bestTime: Array<Scalars["Int"]>;
+  dangerRate: Scalars["Int"];
   suitableCar: SuitableCar;
-  interestingPlaces: Scalars['Int'];
-  placeMap: Scalars['String'];
+  interestingPlaces: Scalars["Int"];
+  placeMap: Scalars["String"];
   suitablePeople: SuitablePeople;
   facilities: Facilities;
   media: Files_Path;
@@ -139,66 +145,61 @@ export type PathType = {
 };
 
 export type Place = {
-  __typename?: 'Place';
+  __typename?: "Place";
   kind?: Maybe<PlaceKind>;
-  description?: Maybe<Scalars['String']>;
-  map?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
+  map?: Maybe<Scalars["String"]>;
   record?: Maybe<PlaceRecord>;
   media?: Maybe<Files_Path>;
 };
 
 export type PlaceInput = {
   kind?: Maybe<PlaceKind>;
-  description?: Maybe<Scalars['String']>;
-  map?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars["String"]>;
+  map?: Maybe<Scalars["String"]>;
   record?: Maybe<PlaceRecord>;
   media?: Maybe<Files_PathInput>;
 };
 
 export enum PlaceKind {
-  Cultural = 'CULTURAL',
-  Nature = 'NATURE'
+  Cultural = "CULTURAL",
+  Nature = "NATURE",
 }
 
 export enum PlaceRecord {
-  National = 'National',
-  International = 'International',
-  None = 'None'
+  National = "National",
+  International = "International",
+  None = "None",
 }
 
 export type Query = {
-  __typename?: 'Query';
+  __typename?: "Query";
   getPath: PathType;
   getPaths: Array<PathType>;
 };
 
-
 export type QueryGetPathArgs = {
-  input: Scalars['ID'];
+  input: Scalars["ID"];
 };
 
-
 export type QueryGetPathsArgs = {
-  input: Scalars['ID'];
+  input: Scalars["ID"];
 };
 
 export enum SuitableCar {
-  RidingCar = 'RidingCar',
-  Motorcycle = 'Motorcycle',
-  Offroad = 'Offroad',
-  Bike = 'Bike'
+  RidingCar = "RidingCar",
+  Motorcycle = "Motorcycle",
+  Offroad = "Offroad",
+  Bike = "Bike",
 }
 
 export enum SuitablePeople {
-  Blind = 'Blind',
-  Deaf = 'Deaf',
-  Wheelchairs = 'Wheelchairs'
+  Blind = "Blind",
+  Deaf = "Deaf",
+  Wheelchairs = "Wheelchairs",
 }
 
-
-
 export type ResolverTypeWrapper<T> = Promise<T> | T;
-
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
@@ -213,7 +214,9 @@ export type NewStitchingResolver<TResult, TParent, TContext, TArgs> = {
   selectionSet: string;
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type StitchingResolver<TResult, TParent, TContext, TArgs> = LegacyStitchingResolver<TResult, TParent, TContext, TArgs> | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
+export type StitchingResolver<TResult, TParent, TContext, TArgs> =
+  | LegacyStitchingResolver<TResult, TParent, TContext, TArgs>
+  | NewStitchingResolver<TResult, TParent, TContext, TArgs>;
 export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> =
   | ResolverFn<TResult, TParent, TContext, TArgs>
   | ResolverWithResolve<TResult, TParent, TContext, TArgs>
@@ -240,9 +243,25 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export interface SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> {
-  subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
-  resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
+  subscribe: SubscriptionSubscribeFn<
+    { [key in TKey]: TResult },
+    TParent,
+    TContext,
+    TArgs
+  >;
+  resolve?: SubscriptionResolveFn<
+    TResult,
+    { [key in TKey]: TResult },
+    TContext,
+    TArgs
+  >;
 }
 
 export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
@@ -250,12 +269,26 @@ export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
 }
 
-export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
+export type SubscriptionObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
-  | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
+export type SubscriptionResolver<
+  TResult,
+  TKey extends string,
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> =
+  | ((
+      ...args: any[]
+    ) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
 export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
@@ -264,11 +297,20 @@ export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = {}, TContext = {}> = (
+  obj: T,
+  context: TContext,
+  info: GraphQLResolveInfo
+) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<
+  TResult = {},
+  TParent = {},
+  TContext = {},
+  TArgs = {}
+> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -279,12 +321,12 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   CreatePathInput: CreatePathInput;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  String: ResolverTypeWrapper<Scalars["String"]>;
+  Int: ResolverTypeWrapper<Scalars["Int"]>;
   CreatePathResponse: ResolverTypeWrapper<CreatePathResponse>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
+  ID: ResolverTypeWrapper<Scalars["ID"]>;
   DeletePathResponse: ResolverTypeWrapper<DeletePathResponse>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  Boolean: ResolverTypeWrapper<Scalars["Boolean"]>;
   Facilities: Facilities;
   File_path: ResolverTypeWrapper<File_Path>;
   File_pathInput: File_PathInput;
@@ -306,12 +348,12 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   CreatePathInput: CreatePathInput;
-  String: Scalars['String'];
-  Int: Scalars['Int'];
+  String: Scalars["String"];
+  Int: Scalars["Int"];
   CreatePathResponse: CreatePathResponse;
-  ID: Scalars['ID'];
+  ID: Scalars["ID"];
   DeletePathResponse: DeletePathResponse;
-  Boolean: Scalars['Boolean'];
+  Boolean: Scalars["Boolean"];
   File_path: File_Path;
   File_pathInput: File_PathInput;
   Files_path: Files_Path;
@@ -325,81 +367,173 @@ export type ResolversParentTypes = {
   Query: {};
 };
 
-export type CreatePathResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreatePathResponse'] = ResolversParentTypes['CreatePathResponse']> = {
-  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+export type CreatePathResponseResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["CreatePathResponse"] = ResolversParentTypes["CreatePathResponse"]
+> = {
+  _id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type DeletePathResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['DeletePathResponse'] = ResolversParentTypes['DeletePathResponse']> = {
-  done?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+export type DeletePathResponseResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["DeletePathResponse"] = ResolversParentTypes["DeletePathResponse"]
+> = {
+  done?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type File_PathResolvers<ContextType = any, ParentType extends ResolversParentTypes['File_path'] = ResolversParentTypes['File_path']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  src?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+export type File_PathResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["File_path"] = ResolversParentTypes["File_path"]
+> = {
+  name?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  src?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type Files_PathResolvers<ContextType = any, ParentType extends ResolversParentTypes['Files_path'] = ResolversParentTypes['Files_path']> = {
-  files?: Resolver<Array<Maybe<ResolversTypes['File_path']>>, ParentType, ContextType>;
+export type Files_PathResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Files_path"] = ResolversParentTypes["Files_path"]
+> = {
+  files?: Resolver<
+    Array<Maybe<ResolversTypes["File_path"]>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createPath?: Resolver<ResolversTypes['CreatePathResponse'], ParentType, ContextType, RequireFields<MutationCreatePathArgs, 'input'>>;
-  mutatePath?: Resolver<ResolversTypes['CreatePathResponse'], ParentType, ContextType, RequireFields<MutationMutatePathArgs, 'input'>>;
-  deletePath?: Resolver<ResolversTypes['DeletePathResponse'], ParentType, ContextType, RequireFields<MutationDeletePathArgs, 'input'>>;
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = {
+  createPath?: Resolver<
+    ResolversTypes["CreatePathResponse"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreatePathArgs, "input">
+  >;
+  mutatePath?: Resolver<
+    ResolversTypes["CreatePathResponse"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationMutatePathArgs, "input">
+  >;
+  deletePath?: Resolver<
+    ResolversTypes["DeletePathResponse"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeletePathArgs, "input">
+  >;
 };
 
-export type PathResolvers<ContextType = any, ParentType extends ResolversParentTypes['Path'] = ResolversParentTypes['Path']> = {
+export type PathResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Path"] = ResolversParentTypes["Path"]
+> = {
   __resolveType: TypeResolveFn<null, ParentType, ContextType>;
-  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  maker?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  origin?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  destination?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  bestTime?: Resolver<Array<ResolversTypes['Int']>, ParentType, ContextType>;
-  dangerRate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  suitableCar?: Resolver<ResolversTypes['SuitableCar'], ParentType, ContextType>;
-  interestingPlaces?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  placeMap?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  suitablePeople?: Resolver<ResolversTypes['SuitablePeople'], ParentType, ContextType>;
-  facilities?: Resolver<ResolversTypes['Facilities'], ParentType, ContextType>;
-  media?: Resolver<ResolversTypes['Files_path'], ParentType, ContextType>;
-  places?: Resolver<Array<Maybe<ResolversTypes['Place']>>, ParentType, ContextType>;
+  _id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  maker?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  origin?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  destination?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  bestTime?: Resolver<Array<ResolversTypes["Int"]>, ParentType, ContextType>;
+  dangerRate?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  suitableCar?: Resolver<
+    ResolversTypes["SuitableCar"],
+    ParentType,
+    ContextType
+  >;
+  interestingPlaces?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  placeMap?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  suitablePeople?: Resolver<
+    ResolversTypes["SuitablePeople"],
+    ParentType,
+    ContextType
+  >;
+  facilities?: Resolver<ResolversTypes["Facilities"], ParentType, ContextType>;
+  media?: Resolver<ResolversTypes["Files_path"], ParentType, ContextType>;
+  places?: Resolver<
+    Array<Maybe<ResolversTypes["Place"]>>,
+    ParentType,
+    ContextType
+  >;
 };
 
-export type PathTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PathType'] = ResolversParentTypes['PathType']> = {
-  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  maker?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  origin?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  destination?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  bestTime?: Resolver<Array<ResolversTypes['Int']>, ParentType, ContextType>;
-  dangerRate?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  suitableCar?: Resolver<ResolversTypes['SuitableCar'], ParentType, ContextType>;
-  interestingPlaces?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  placeMap?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  suitablePeople?: Resolver<ResolversTypes['SuitablePeople'], ParentType, ContextType>;
-  facilities?: Resolver<ResolversTypes['Facilities'], ParentType, ContextType>;
-  media?: Resolver<ResolversTypes['Files_path'], ParentType, ContextType>;
-  places?: Resolver<Array<Maybe<ResolversTypes['Place']>>, ParentType, ContextType>;
+export type PathTypeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["PathType"] = ResolversParentTypes["PathType"]
+> = {
+  _id?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  maker?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  origin?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  destination?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  bestTime?: Resolver<Array<ResolversTypes["Int"]>, ParentType, ContextType>;
+  dangerRate?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  suitableCar?: Resolver<
+    ResolversTypes["SuitableCar"],
+    ParentType,
+    ContextType
+  >;
+  interestingPlaces?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  placeMap?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  suitablePeople?: Resolver<
+    ResolversTypes["SuitablePeople"],
+    ParentType,
+    ContextType
+  >;
+  facilities?: Resolver<ResolversTypes["Facilities"], ParentType, ContextType>;
+  media?: Resolver<ResolversTypes["Files_path"], ParentType, ContextType>;
+  places?: Resolver<
+    Array<Maybe<ResolversTypes["Place"]>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type PlaceResolvers<ContextType = any, ParentType extends ResolversParentTypes['Place'] = ResolversParentTypes['Place']> = {
-  kind?: Resolver<Maybe<ResolversTypes['PlaceKind']>, ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  map?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  record?: Resolver<Maybe<ResolversTypes['PlaceRecord']>, ParentType, ContextType>;
-  media?: Resolver<Maybe<ResolversTypes['Files_path']>, ParentType, ContextType>;
+export type PlaceResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Place"] = ResolversParentTypes["Place"]
+> = {
+  kind?: Resolver<Maybe<ResolversTypes["PlaceKind"]>, ParentType, ContextType>;
+  description?: Resolver<
+    Maybe<ResolversTypes["String"]>,
+    ParentType,
+    ContextType
+  >;
+  map?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  record?: Resolver<
+    Maybe<ResolversTypes["PlaceRecord"]>,
+    ParentType,
+    ContextType
+  >;
+  media?: Resolver<
+    Maybe<ResolversTypes["Files_path"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getPath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<QueryGetPathArgs, 'input'>>;
-  getPaths?: Resolver<Array<ResolversTypes['PathType']>, ParentType, ContextType, RequireFields<QueryGetPathsArgs, 'input'>>;
+export type QueryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
+> = {
+  getPath?: Resolver<
+    ResolversTypes["PathType"],
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetPathArgs, "input">
+  >;
+  getPaths?: Resolver<
+    Array<ResolversTypes["PathType"]>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetPathsArgs, "input">
+  >;
 };
 
 export type Resolvers<ContextType = any> = {
@@ -413,7 +547,6 @@ export type Resolvers<ContextType = any> = {
   Place?: PlaceResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
-
 
 /**
  * @deprecated

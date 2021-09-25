@@ -5,10 +5,7 @@ import type { MailOptions } from "nodemailer/lib/json-transport";
 let transporter: ReturnType<typeof nodemailer.createTransport>;
 
 function getTransporter() {
-  const {
-    MAIL,
-    MAIL_PASS,
-  } = process.env;
+  const { MAIL, MAIL_PASS } = process.env;
 
   return nodemailer.createTransport(
     smtpTransport({

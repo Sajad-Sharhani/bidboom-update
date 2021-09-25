@@ -5,7 +5,7 @@ import { resolvers as userResolvers } from "./user/user.resolver";
 import validateEnv from "./utils/validateEnv";
 import { config } from "dotenv";
 
-config();
+console.log(config());
 
 validateEnv();
 
