@@ -1,6 +1,3 @@
-import cities from "../statics/city";
-import countries from "../statics/country";
-import provinces from "../statics/province";
 import {
   MutationResolvers,
   MutationCreatePathArgs,
@@ -12,6 +9,9 @@ import {
   PathType,
   QueryGetPathsArgs,
 } from "../schema/path";
+import cities from "../statics/city";
+import countries from "../statics/country";
+import provinces from "../statics/province";
 import { authenticate } from "../utils/index";
 import pathModel from "./path.model";
 

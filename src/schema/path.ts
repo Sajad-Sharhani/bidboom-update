@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Long: any;
 };
 
 export type CreatePathInput = {
@@ -71,10 +72,11 @@ export type Locality = {
   __typename?: 'Locality';
   id: Scalars['String'];
   name: Scalars['String'];
-  latitude: Scalars['Int'];
-  longitude: Scalars['Int'];
+  latitude?: Maybe<Scalars['Long']>;
+  longitude?: Maybe<Scalars['Long']>;
   province?: Maybe<Scalars['Int']>;
 };
+
 
 export type MutatePathInput = {
   _id: Scalars['ID'];
@@ -313,6 +315,7 @@ export type ResolversTypes = {
   Files_path: ResolverTypeWrapper<Files_Path>;
   Files_pathInput: Files_PathInput;
   Locality: ResolverTypeWrapper<Locality>;
+  Long: ResolverTypeWrapper<Scalars['Long']>;
   MutatePathInput: MutatePathInput;
   Mutation: ResolverTypeWrapper<{}>;
   Path: never;
@@ -340,6 +343,7 @@ export type ResolversParentTypes = {
   Files_path: Files_Path;
   Files_pathInput: Files_PathInput;
   Locality: Locality;
+  Long: Scalars['Long'];
   MutatePathInput: MutatePathInput;
   Mutation: {};
   Path: never;
@@ -373,11 +377,15 @@ export type Files_PathResolvers<ContextType = any, ParentType extends ResolversP
 export type LocalityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Locality'] = ResolversParentTypes['Locality']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  latitude?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  longitude?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  latitude?: Resolver<Maybe<ResolversTypes['Long']>, ParentType, ContextType>;
+  longitude?: Resolver<Maybe<ResolversTypes['Long']>, ParentType, ContextType>;
   province?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
+
+export interface LongScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Long'], any> {
+  name: 'Long';
+}
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createPath?: Resolver<ResolversTypes['CreatePathResponse'], ParentType, ContextType, RequireFields<MutationCreatePathArgs, 'input'>>;
@@ -449,6 +457,7 @@ export type Resolvers<ContextType = any> = {
   File_path?: File_PathResolvers<ContextType>;
   Files_path?: Files_PathResolvers<ContextType>;
   Locality?: LocalityResolvers<ContextType>;
+  Long?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   Path?: PathResolvers<ContextType>;
   PathType?: PathTypeResolvers<ContextType>;

@@ -1,3 +1,5 @@
+scalar Long
+
 enum SuitableCar {
   RidingCar
   Motorcycle
@@ -165,8 +167,8 @@ type DeletePathResponse {
 type Locality {
   id: String!
   name: String!
-  latitude: Int!
-  longitude: Int!
+  latitude: Long
+  longitude: Long
   province: Int
 }
 
