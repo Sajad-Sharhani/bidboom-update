@@ -107,7 +107,7 @@ const sendCode: MutationResolvers["sendCode"] = async ({
   if (phoneNumber) {
     const { message, status } = await sendMessage({
       message: text,
-      sender: 1000596446,
+      sender: 10008663,
       receptor: phoneNumber,
     });
     return { sms: { message, status } };
