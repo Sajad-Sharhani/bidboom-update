@@ -9,5 +9,5 @@ export async function authenticate(
   if (user.type !== type) {
     throw new Error(`user is not an ${type}`);
   }
-  return user
+  return user;
 }
