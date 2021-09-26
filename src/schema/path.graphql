@@ -68,6 +68,9 @@ input PlaceInput {
 interface Path {
   _id: ID!
   maker: ID!
+  # lng lat
+  originPoint: String
+  destinationPoint: String
   origin: String!
   destination: String!
   title: String!
@@ -75,11 +78,11 @@ interface Path {
   bestTime: [Int!]!
   # low:1, ..., dangerous:3
   dangerRate: Int!
-  suitableCar: SuitableCar!
+  suitableCar: [SuitableCar!]
   interestingPlaces: Int!
   placeMap: String!
-  suitablePeople: SuitablePeople!
-  facilities: Facilities!
+  suitablePeople: [SuitablePeople!]
+  facilities: [Facilities!]
   # photos/videos/...
   media: Files_path!
   places: [Place]!
@@ -98,11 +101,11 @@ type PathType {
   bestTime: [Int!]!
   # low:1, ..., dangerous:3
   dangerRate: Int!
-  suitableCar: SuitableCar!
+  suitableCar: [SuitableCar!]
   interestingPlaces: Int!
   placeMap: String!
-  suitablePeople: SuitablePeople!
-  facilities: Facilities!
+  suitablePeople: [SuitablePeople!]
+  facilities: [Facilities!]
   # photos/videos/...
   media: Files_path!
   places: [Place]!
@@ -111,16 +114,19 @@ type PathType {
 input CreatePathInput {
   origin: String!
   destination: String!
+  # lng lat
+  originPoint: String
+  destinationPoint: String
   title: String!
   # jan/farvardin: 0, feb/...: 1, ..., 11
   bestTime: [Int!]!
   # low:1, ..., dangerous:3
   dangerRate: Int!
-  suitableCar: SuitableCar!
+  suitableCar: [SuitableCar!]
   interestingPlaces: Int!
   placeMap: String!
-  suitablePeople: SuitablePeople!
-  facilities: Facilities!
+  suitablePeople: [SuitablePeople!]
+  facilities: [Facilities!]
   # photos/videos/...
   media: Files_pathInput!
   places: [PlaceInput]!
@@ -130,16 +136,19 @@ input MutatePathInput {
   _id: ID!
   origin: String!
   destination: String!
+  # lng lat
+  originPoint: String
+  destinationPoint: String
   title: String!
   # jan/farvardin: 0, feb/...: 1, ..., 11
   bestTime: [Int!]!
   # low:1, ..., dangerous:3
   dangerRate: Int!
-  suitableCar: SuitableCar!
+  suitableCar: [SuitableCar!]
   interestingPlaces: Int!
   placeMap: String!
-  suitablePeople: SuitablePeople!
-  facilities: Facilities!
+  suitablePeople: [SuitablePeople!]
+  facilities: [Facilities!]
   # photos/videos/...
   media: Files_pathInput!
   places: [PlaceInput]!
@@ -153,11 +162,22 @@ type DeletePathResponse {
   done: Boolean!
 }
 
+type Locality {
+  id: String!
+  name: String!
+  latitude: Int!
+  longitude: Int!
+  province: Int
+}
+
 extend type Query {
   # path id
   getPath(input: ID!): PathType!
   # user id
   getPaths(input: ID!): [PathType!]!
+  getCity: [Locality!]!
+  getProvince: [Locality!]!
+  getCountry: [Locality!]!
 }
 
 extend type Mutation {

@@ -1,3 +1,6 @@
+import cities from "../statics/city";
+import countries from "../statics/country";
+import provinces from "../statics/province";
 import {
   MutationResolvers,
   MutationCreatePathArgs,
@@ -65,4 +68,7 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   deletePath: deletePath as any,
   getPath,
   getPaths,
+  getCity: () => cities as any,
+  getProvince: () => provinces as any,
+  getCountry: () => countries as any,
 };
