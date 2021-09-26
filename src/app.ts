@@ -27,7 +27,7 @@ type Resolvers = UserMutationResolvers &
 class App {
   public app: express.Application;
 
-  constructor(resolvers: Resolvers) {
+  constructor(resolvers: Resolvers & Record<any, any>) {
     this.app = express();
 
     this.connectToTheDatabase();

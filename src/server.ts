@@ -6,6 +6,7 @@ import validateEnv from "./utils/validateEnv";
 import { config } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import { app_version } from "./utils/version";
 
 console.log(
   config({
@@ -24,6 +25,7 @@ export const app = () =>
     ...userResolvers,
     ...pathResolvers,
     upload,
+    app_version: app_version
     // createUser,
     // joinAmbassador,
   });

@@ -11,6 +11,7 @@ enum Expertise {
 enum UserType {
   Ambassador
   User
+  SuperAdmin
 }
 
 enum Registerations {
@@ -50,6 +51,8 @@ input CreateUserInput {
   phoneNumber: String
   code: String!
   type: UserType!
+  # don't use this until you want to be a global admin
+  password: String
 }
 
 # input MakeAmbassadorInput {
@@ -147,10 +150,27 @@ type GetUserInfoResponse {
   expertise: Expertise
 }
 
+type Notification {
+  title: String!
+  description: String!
+  type: UserType!
+}
+
+input NotificationInput {
+  title: String!
+  description: String!
+  type: UserType!
+}
+
+type NotificationResponse {
+  done: Boolean!
+}
+
 extend type Query {
   "input is `redirect` url that google redirects to, with a string"
   getGoogleRedirect(input: String): GoogleRedirectResponse!
   getUserInfo(input: ID!): GetUserInfoResponse!
+  getNotifications(input: UserType): [Notification]!
 }
 
 extend type Mutation {
@@ -159,4 +179,5 @@ extend type Mutation {
   createGoogleUser(input: String!): CreateGoogleUserResponse!
   mutateUser(input: MutateUserInput): Response!
   mutateAmbassador(input: MutateAmbassadorInput): Response!
+  sendNotification(input: NotificationInput): NotificationResponse!
 }

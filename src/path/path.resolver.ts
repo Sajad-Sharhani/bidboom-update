@@ -1,3 +1,4 @@
+import { authenticate } from "../utils/index";
 import {
   MutationResolvers,
   MutationCreatePathArgs,
@@ -9,16 +10,7 @@ import {
   PathType,
   QueryGetPathsArgs,
 } from "../schema/path";
-import { UserType } from "../schema/user";
-import userModel from "../user/user.model";
 import pathModel from "./path.model";
-
-async function authenticate(id: string) {
-  const user = await userModel.findById(id);
-  if (user.type !== UserType["Ambassador"]) {
-    throw new Error("user is not an Ambassador");
-  }
-}
 
 const createPath = async (
   { input }: MutationCreatePathArgs,

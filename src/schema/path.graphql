@@ -48,6 +48,7 @@ input Files_pathInput {
 }
 
 type Place {
+  title: String
   kind: PlaceKind
   description: String
   map: String
@@ -56,6 +57,7 @@ type Place {
 }
 
 input PlaceInput {
+  title: String
   kind: PlaceKind
   description: String
   map: String
@@ -85,6 +87,10 @@ interface Path {
 type PathType {
   _id: ID!
   maker: ID!
+  # lng lat
+  originPoint: String
+  destinationPoint: String
+  # city
   origin: String!
   destination: String!
   title: String!
