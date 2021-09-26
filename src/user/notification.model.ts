@@ -16,9 +16,8 @@ const notificationSchema = new mongoose.Schema(
   }
 );
 
-const notificationModel = mongoose.model<Notification & mongoose.Document>(
-  "Notification",
-  notificationSchema
-);
+const notificationModel = mongoose.model<
+  Notification & { createdAt: string } & mongoose.Document
+>("Notification", notificationSchema);
 
 export default notificationModel;

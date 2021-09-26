@@ -1,4 +1,3 @@
-import { authenticate } from "../utils/index";
 import {
   MutationResolvers,
   MutationCreatePathArgs,
@@ -10,6 +9,7 @@ import {
   PathType,
   QueryGetPathsArgs,
 } from "../schema/path";
+import { authenticate } from "../utils/index";
 import pathModel from "./path.model";
 
 const createPath = async (
