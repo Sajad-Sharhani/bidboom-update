@@ -1,5 +1,1 @@
-declare module "graphql-type-long" {
-
-}
-
-
+declare module "graphql-type-long" {}
