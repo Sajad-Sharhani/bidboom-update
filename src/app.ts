@@ -1,5 +1,5 @@
 import typeDefs from "./schema/schema";
-import GraphQLLong from 'graphql-type-long';
+import GraphQLLong from './types/Long';
 import type {
   QueryResolvers as UploadQueryResolvers,
   MutationResolvers as UploadMutationResolvers,
