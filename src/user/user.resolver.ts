@@ -102,7 +102,8 @@ const sendCode: MutationResolvers["sendCode"] = async ({
 
   const code = generate4digitNum();
   await redis.setex(phoneNumber ?? email, THREE_MINS, code);
-  const text = `Bidboom: Your code is ${code}`;
+  const text = `کاربر عزیز بیدبوم، 
+کد تایید موقت حساب شما در بیدبوم ${code} می باشد.`;
 
   if (phoneNumber) {
     const { message, status } = await sendMessage({
@@ -110,11 +111,12 @@ const sendCode: MutationResolvers["sendCode"] = async ({
       sender: 10008800060060,
       receptor: phoneNumber,
     });
+    console.log(message, status)
     return { sms: { message, status } };
   }
   if (email) {
     try {
-      await sendMail({ to: email, subject: "Bidboom", text });
+      await sendMail({ to: email, subject: "بیدبوم", text });
     } catch (e) {
       console.error(e);
       throw e;
