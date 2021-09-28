@@ -45,7 +45,11 @@ export enum Facilities {
   Market = 'Market',
   Restaurant = 'Restaurant',
   Park = 'Park',
-  GasStation = 'GasStation'
+  GasStation = 'GasStation',
+  Mosque = 'Mosque',
+  Hospital = 'Hospital',
+  Residence = 'Residence',
+  Checkpoint = 'Checkpoint'
 }
 
 export type File_Path = {
