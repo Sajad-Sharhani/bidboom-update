@@ -1,3 +1,4 @@
+import errors from "../schema/errors";
 import {
   MutationResolvers,
   MutationCreatePathArgs,
@@ -20,7 +21,12 @@ const createPath = async (
   { _id }: { _id: string | null }
 ): Promise<CreatePathResponse> => {
   await authenticate(_id);
-  const path = await pathModel.create({ ...input, maker: _id });
+  let path;
+  try {
+    path = await pathModel.create({ ...input, maker: _id });
+  } catch {
+    throw new Error(errors[14].id);
+  }
 
   return { _id: path._id };
 };
@@ -31,10 +37,11 @@ const mutatePath = async (
 ) => {
   await authenticate(_id);
 
-  // const path = await pathModel.findById(pathId)
-
-  await pathModel.updateOne({ _id: pathId }, data);
-  // path.update(data)
+  try {
+    await pathModel.updateOne({ _id: pathId }, data);
+  } catch {
+    throw new Error(errors[15].id);
+  }
 
   return { _id: pathId };
 };
@@ -45,19 +52,33 @@ const deletePath = async (
 ) => {
   await authenticate(_id);
 
-  await pathModel.deleteOne({ _id: input });
+  try {
+    await pathModel.deleteOne({ _id: input });
+  } catch {
+    throw new Error(errors[16].id);
+  }
 
   return { done: true };
 };
 
 const getPath = async ({ input }: QueryGetPathArgs): Promise<PathType> => {
-  const path = (await pathModel.findById(input)).toObject();
+  let path;
+  try {
+    path = (await pathModel.findById(input)).toObject();
+  } catch {
+    throw new Error(errors[17].id);
+  }
 
   return path;
 };
 
 const getPaths = async ({ input }: QueryGetPathsArgs) => {
-  const paths = await pathModel.find({ maker: input });
+  let paths;
+  try {
+    paths = await pathModel.find({ maker: input });
+  } catch {
+    throw new Error(errors[17].id);
+  }
 
   return paths;
 };

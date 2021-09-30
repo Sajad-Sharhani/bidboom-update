@@ -1,12 +1,13 @@
 import App from "./app";
 import { resolvers as pathResolvers } from "./path/path.resolver";
+import errors from "./schema/errors";
 import { upload } from "./upload/upload.resolver";
 import { resolvers as userResolvers } from "./user/user.resolver";
 import validateEnv from "./utils/validateEnv";
+import { app_version } from "./utils/version";
 import { config } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import { app_version } from "./utils/version";
 
 console.log(
   config({
@@ -25,9 +26,13 @@ export const app = () =>
     ...userResolvers,
     ...pathResolvers,
     upload,
-    app_version: app_version
-    // createUser,
-    // joinAmbassador,
+    app_version: app_version,
+    errors: () => {
+      return errors;
+    },
+    errorSample: () => {
+      throw new Error(errors[5].id);
+    },
   });
 
 // if (!process.env.TEST) {

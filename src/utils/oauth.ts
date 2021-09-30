@@ -1,3 +1,4 @@
+import errors from "../schema/errors";
 import * as redis from "../utils/asyncRedis";
 import axios from "axios";
 import type { OAuth2Client } from "google-auth-library";
@@ -31,26 +32,33 @@ export async function generateUrl(redirect: string = "http://localhost:3000") {
 
 export async function getAccount(code: string) {
   const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-  const redirectUri = await redis.get("REDIRECT_URI");
+  let data;
+  try {
+    const redirectUri = await redis.get("REDIRECT_URI");
 
-  const { data: tokens } = await axios({
-    url: `https://oauth2.googleapis.com/token`,
-    method: "post",
-    data: {
-      client_id: GOOGLE_CLIENT_ID,
-      client_secret: GOOGLE_CLIENT_SECRET,
-      redirect_uri: redirectUri,
-      grant_type: "authorization_code",
-      code,
-    },
-  });
-  const { data } = await axios({
-    url: "https://www.googleapis.com/oauth2/v2/userinfo",
-    method: "get",
-    headers: {
-      Authorization: `Bearer ${tokens.access_token}`,
-    },
-  });
+    const { data: tokens } = await axios({
+      url: `https://oauth2.googleapis.com/token`,
+      method: "post",
+      data: {
+        client_id: GOOGLE_CLIENT_ID,
+        client_secret: GOOGLE_CLIENT_SECRET,
+        redirect_uri: redirectUri,
+        grant_type: "authorization_code",
+        code,
+      },
+    });
+    data = (
+      await axios({
+        url: "https://www.googleapis.com/oauth2/v2/userinfo",
+        method: "get",
+        headers: {
+          Authorization: `Bearer ${tokens.access_token}`,
+        },
+      })
+    ).data;
+  } catch {
+    throw new Error(errors[8].id);
+  }
 
   return {
     name: data.name as string,

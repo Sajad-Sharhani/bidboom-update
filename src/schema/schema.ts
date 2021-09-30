@@ -15,9 +15,16 @@ const defaultTypeDef = `
     android_update_link: String
   }
 
+  type Error {
+    id: String
+    description: String
+  }
+
   type Query {
     _version_query: String
     app_version: Version
+    errors: [Error!]!
+    errorSample: String!
   }
 
   type Mutation {

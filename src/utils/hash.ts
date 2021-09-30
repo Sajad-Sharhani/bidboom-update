@@ -1,3 +1,4 @@
+import errors from "../schema/errors";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import uniqid from "uniqid";
@@ -13,9 +14,13 @@ export const compare = async (input: string, original: string) => {
 };
 
 export const getToken = async (id: string) => {
-  return jwt.sign({ id }, JWT_SECRET || "Test", {
-    expiresIn: 60 * 60 * 60 * 60,
-  });
+  try {
+    return jwt.sign({ id }, JWT_SECRET || "Test", {
+      expiresIn: 60 * 60 * 60 * 60,
+    });
+  } catch {
+    throw new Error(errors[3].id);
+  }
 };
 
 export const verifyToken = (token: string) => {

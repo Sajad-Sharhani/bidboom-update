@@ -1,3 +1,4 @@
+import errors from "../schema/errors";
 import {
   CreateUserInput,
   MutationResolvers,
@@ -57,27 +58,37 @@ const createUser: MutationResolvers["createUser"] = async ({
 
   const code = await redis.get(userData.phoneNumber ?? userData.email);
   if (code !== userData.code) {
-    throw new Error("code is invalid");
+    throw new Error(errors[0].id);
   }
 
-  let user = await userModel.findOne(
-    userData.email
-      ? {
-          email: userData.email,
-        }
-      : { phoneNumber: userData.phoneNumber }
-  );
+  let user;
+
+  try {
+    user = await userModel.findOne(
+      userData.email
+        ? {
+            email: userData.email,
+          }
+        : { phoneNumber: userData.phoneNumber }
+    );
+  } catch {
+    throw new Error(errors[1].id);
+  }
 
   if (!user) {
-    user = await userModel.create({
-      ...userData,
-      identifierCode: await getUnique(userData.phoneNumber || userData.email),
-      ICUsers: [],
-      type: userData.type || UserType["User"],
-      registerations: userData.phoneNumber
-        ? Registerations["PhoneNumber"]
-        : Registerations["Email"],
-    });
+    try {
+      user = await userModel.create({
+        ...userData,
+        identifierCode: await getUnique(userData.phoneNumber || userData.email),
+        ICUsers: [],
+        type: userData.type || UserType["User"],
+        registerations: userData.phoneNumber
+          ? Registerations["PhoneNumber"]
+          : Registerations["Email"],
+      });
+    } catch {
+      throw new Error(errors[1].id);
+    }
   }
 
   return { token: await getToken(user._id), type: user.type, _id: user._id };
@@ -111,15 +122,13 @@ const sendCode: MutationResolvers["sendCode"] = async ({
       sender: 10008800060060,
       receptor: phoneNumber,
     });
-    console.log(message, status)
     return { sms: { message, status } };
   }
   if (email) {
     try {
       await sendMail({ to: email, subject: "بیدبوم", text });
-    } catch (e) {
-      console.error(e);
-      throw e;
+    } catch {
+      throw new Error(errors[4].id);
     }
 
     return { sms: { message: "done", status: 200 } };
@@ -127,33 +136,28 @@ const sendCode: MutationResolvers["sendCode"] = async ({
   return {};
 };
 
-// const makeAmbassador: MutationResolvers["makeAmbassador"] = async ({
-//   input: { _id, ...userData },
-// }: {
-//   input: MakeAmbassadorInput;
-// }) => {
-//   let user = await userModel.findById(_id);
-//   if (!user) {
-//     throw new Error("there's no user with _id");
-//   }
-//   await user.update({ ...userData, type: UserType["Ambassador"] });
-//
-//   return { token: await getToken(user._id), type: UserType["Ambassador"], _id };
-// };
-
 const mutateUser: MutationResolvers["mutateUser"] = async ({
   input: userData,
 }: {
   input: MutateUserInput;
 }) => {
-  let user = await userModel.findById(userData._id);
+  let user;
+  try {
+    user = await userModel.findById(userData._id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
 
   if (!user) {
-    throw new Error("No user with such _id");
+    throw new Error(errors[5].id);
   } else {
-    await user.update({
-      ...userData,
-    });
+    try {
+      await user.update({
+        ...userData,
+      });
+    } catch {
+      throw new Error(errors[6].id);
+    }
   }
   resolveIdentifierCode(userData.identifierCode, user._id);
 
@@ -170,16 +174,25 @@ const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
 }: {
   input: MutateAmbassadorInput;
 }) => {
-  let user = await userModel.findById(userData._id);
+  let user;
+  try {
+    user = await userModel.findById(userData._id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
 
   if (!user) {
-    throw new Error("No user with such _id");
+    throw new Error(errors[5].id);
   } else if (user.type !== UserType["Ambassador"]) {
-    throw new Error("user is not Ambassador");
+    throw new Error(errors[7].id);
   } else {
-    await user.update({
-      ...userData,
-    });
+    try {
+      await user.update({
+        ...userData,
+      });
+    } catch {
+      throw new Error(errors[6].id);
+    }
   }
   resolveIdentifierCode(userData.identifierCode, user._id);
 
@@ -198,20 +211,32 @@ const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
 }) => {
   const userData = await getAccount(code);
 
-  let user = await userModel.findOne({
-    email: userData.email,
-  });
-
+  let user;
+  try {
+    user = await userModel.findOne({
+      email: userData.email,
+    });
+  } catch {
+    throw new Error(errors[1].id);
+  }
   if (!user) {
-    user = await userModel.create({
-      ...userData,
-      identifierCode: await getUnique(userData.name),
-      type: UserType["User"],
-    });
+    try {
+      user = await userModel.create({
+        ...userData,
+        identifierCode: await getUnique(userData.name),
+        type: UserType["User"],
+      });
+    } catch {
+      throw new Error(errors[1].id);
+    }
   } else {
-    await user.update({
-      ...userData,
-    });
+    try {
+      await user.update({
+        ...userData,
+      });
+    } catch {
+      throw new Error(errors[6].id);
+    }
   }
 
   return {
@@ -225,10 +250,14 @@ const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
 const getUserInfo: QueryResolvers["getUserInfo"] = async ({
   input: _id,
 }: QueryGetUserInfoArgs) => {
-  let user = await userModel.findById(_id);
-
+  let user;
+  try {
+    user = await userModel.findById(_id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
   if (!user) {
-    throw new Error("no user");
+    throw new Error(errors[5].id);
   }
   return user.toObject();
 };
@@ -255,7 +284,11 @@ const sendNotification = async (
 ) => {
   await authenticate(_id, UserType["SuperAdmin"]);
 
-  await notificationModel.create(input);
+  try {
+    await notificationModel.create(input);
+  } catch {
+    throw new Error(errors[12].id);
+  }
 
   return { done: true };
 };
@@ -263,7 +296,12 @@ const sendNotification = async (
 const getNotifications: QueryResolvers["getNotifications"] = async ({
   input,
 }: QueryGetNotificationsArgs) => {
-  const notifs = await notificationModel.find({ type: input });
+  let notifs;
+  try {
+    notifs = await notificationModel.find({ type: input });
+  } catch {
+    throw new Error(errors[13].id);
+  }
 
   return notifs.map((n) => n.toObject());
 };
