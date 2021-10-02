@@ -11,7 +11,10 @@ export default [
   { id: "9", description: "user is not an Ambassador" },
   { id: "10", description: "user is not an User" },
   { id: "11", description: "user is not an SuperAdmin" },
-  { id: "12", description: "failed sending notification (failed creating in db)" },
+  {
+    id: "12",
+    description: "failed sending notification (failed creating in db)",
+  },
   { id: "13", description: "failed finding notifs" },
   { id: "14", description: "failed creating path" },
   { id: "15", description: "failed updating path" },

@@ -21,7 +21,7 @@ enum Registerations {
 
 interface User {
   _id: ID!
-  name: String!
+  name: String
   userName: String
   email: String
   phoneNumber: String
@@ -132,16 +132,16 @@ type CreateGoogleUserResponse {
 
 type GetUserInfoResponse {
   _id: ID!
-  name: String!
+  name: String
   userName: String
   email: String
   phoneNumber: String
   image: String
   description: String
-  usersOfIdentifierCode: [String]!
+  usersOfIdentifierCode: [String]
   identifierCode: String
-  ICUsers: [ID]!
-  type: UserType!
+  ICUsers: [ID]
+  type: UserType
 
   nationalCode: String
   instagram: String

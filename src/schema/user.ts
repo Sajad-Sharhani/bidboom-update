@@ -51,16 +51,16 @@ export enum Expertise {
 export type GetUserInfoResponse = {
   __typename?: 'GetUserInfoResponse';
   _id: Scalars['ID'];
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
-  usersOfIdentifierCode: Array<Maybe<Scalars['String']>>;
+  usersOfIdentifierCode?: Maybe<Array<Maybe<Scalars['String']>>>;
   identifierCode?: Maybe<Scalars['String']>;
-  ICUsers: Array<Maybe<Scalars['ID']>>;
-  type: UserType;
+  ICUsers?: Maybe<Array<Maybe<Scalars['ID']>>>;
+  type?: Maybe<UserType>;
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -216,7 +216,7 @@ export type SmsResponse = {
 
 export type User = {
   _id: Scalars['ID'];
-  name: Scalars['String'];
+  name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
   email?: Maybe<Scalars['String']>;
   phoneNumber?: Maybe<Scalars['String']>;
@@ -399,16 +399,16 @@ export type EntriesResolvers<ContextType = any, ParentType extends ResolversPare
 
 export type GetUserInfoResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetUserInfoResponse'] = ResolversParentTypes['GetUserInfoResponse']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   phoneNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  usersOfIdentifierCode?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  usersOfIdentifierCode?: Resolver<Maybe<Array<Maybe<ResolversTypes['String']>>>, ParentType, ContextType>;
   identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  ICUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['UserType']>, ParentType, ContextType>;
   nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -470,7 +470,7 @@ export type SmsResponseResolvers<ContextType = any, ParentType extends Resolvers
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   __resolveType: TypeResolveFn<null, ParentType, ContextType>;
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   phoneNumber?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
