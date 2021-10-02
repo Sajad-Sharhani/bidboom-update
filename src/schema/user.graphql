@@ -122,12 +122,15 @@ type GoogleRedirectResponse {
 }
 
 type CreateGoogleUserResponse {
-  name: String!
   email: String!
-  image: String!
   _id: ID!
   token: String!
   type: UserType!
+}
+
+input CreateGoogleUserInput {
+  type: UserType!
+  token: String!
 }
 
 type GetUserInfoResponse {
@@ -176,7 +179,7 @@ extend type Query {
 extend type Mutation {
   createUser(input: CreateUserInput!): Response!
   sendCode(input: SendCodeInput!): SendCodeResponse!
-  createGoogleUser(input: String!): CreateGoogleUserResponse!
+  createGoogleUser(input: CreateGoogleUserInput!): CreateGoogleUserResponse!
   mutateUser(input: MutateUserInput): Response!
   mutateAmbassador(input: MutateAmbassadorInput): Response!
   sendNotification(input: NotificationInput): NotificationResponse!

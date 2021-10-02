@@ -13,11 +13,14 @@ export type Scalars = {
   Float: number;
 };
 
+export type CreateGoogleUserInput = {
+  type: UserType;
+  token: Scalars['String'];
+};
+
 export type CreateGoogleUserResponse = {
   __typename?: 'CreateGoogleUserResponse';
-  name: Scalars['String'];
   email: Scalars['String'];
-  image: Scalars['String'];
   _id: Scalars['ID'];
   token: Scalars['String'];
   type: UserType;
@@ -127,7 +130,7 @@ export type MutationSendCodeArgs = {
 
 
 export type MutationCreateGoogleUserArgs = {
-  input: Scalars['String'];
+  input: CreateGoogleUserInput;
 };
 
 
@@ -323,8 +326,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  CreateGoogleUserResponse: ResolverTypeWrapper<CreateGoogleUserResponse>;
+  CreateGoogleUserInput: CreateGoogleUserInput;
   String: ResolverTypeWrapper<Scalars['String']>;
+  CreateGoogleUserResponse: ResolverTypeWrapper<CreateGoogleUserResponse>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   CreateUserInput: CreateUserInput;
   Entries: ResolverTypeWrapper<Entries>;
@@ -352,8 +356,9 @@ export type ResolversTypes = {
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  CreateGoogleUserResponse: CreateGoogleUserResponse;
+  CreateGoogleUserInput: CreateGoogleUserInput;
   String: Scalars['String'];
+  CreateGoogleUserResponse: CreateGoogleUserResponse;
   ID: Scalars['ID'];
   CreateUserInput: CreateUserInput;
   Entries: Entries;
@@ -376,9 +381,7 @@ export type ResolversParentTypes = {
 };
 
 export type CreateGoogleUserResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreateGoogleUserResponse'] = ResolversParentTypes['CreateGoogleUserResponse']> = {
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  image?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;

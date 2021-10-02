@@ -205,11 +205,14 @@ const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
 };
 
 const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
-  input: code,
+  input,
 }: {
   input: MutationCreateGoogleUserArgs["input"];
 }) => {
-  const userData = await getAccount(code);
+  if (input.type === UserType["SuperAdmin"]) {
+    return;
+  }
+  const userData = await getAccount(input.token);
 
   let user;
   try {
@@ -223,8 +226,8 @@ const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
     try {
       user = await userModel.create({
         ...userData,
-        identifierCode: await getUnique(userData.name),
-        type: UserType["User"],
+        identifierCode: await getUnique(userData.email),
+        type: input.type,
       });
     } catch {
       throw new Error(errors[1].id);
