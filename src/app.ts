@@ -1,5 +1,4 @@
 import typeDefs from "./schema/schema";
-import GraphQLLong from './types/Long';
 import type {
   QueryResolvers as UploadQueryResolvers,
   MutationResolvers as UploadMutationResolvers,
@@ -8,6 +7,7 @@ import type {
   // QueryResolvers as AmbassadorQueryResolvers,
   MutationResolvers as UserMutationResolvers,
 } from "./schema/user";
+import GraphQLLong from "./types/Long";
 import userModel from "./user/user.model";
 import { verifyToken } from "./utils/hash";
 import { makeExecutableSchema } from "@graphql-tools/schema";
@@ -19,7 +19,10 @@ import { GraphQLUpload } from "graphql-upload";
 import { graphqlUploadExpress } from "graphql-upload";
 import mongoose from "mongoose";
 import morgan from "morgan";
+import path from "path";
+import { fileURLToPath } from "url";
 
+const __dirname = fileURLToPath(path.dirname(import.meta.url));
 type Resolvers = UserMutationResolvers &
   // AmbassadorQueryResolvers &
   UploadQueryResolvers &
@@ -68,6 +71,10 @@ class App {
     });
 
     this.app.use(
+      "/upload",
+      express.static(path.resolve(__dirname, "../uploads"))
+    );
+    this.app.use(
       "/graphql",
       graphqlUploadExpress(),
       graphqlHTTP((req) => ({
@@ -78,7 +85,7 @@ class App {
         rootValue: {
           ...resolvers,
           Upload: GraphQLUpload,
-          Long: GraphQLLong
+          Long: GraphQLLong,
         },
         graphiql: true,
       }))

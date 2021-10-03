@@ -6,13 +6,16 @@ import { FileUpload } from "graphql-upload";
 import makeDir from "make-dir";
 import path from "path";
 import shortId from "shortid";
+import { fileURLToPath } from "url";
+import { getUnique } from "../utils/hash";
 
-const __dirname = path.dirname(import.meta.url);
+const __dirname = fileURLToPath(path.dirname(import.meta.url));
 
 const UPLOAD_DIR = path.resolve(__dirname, "../../uploads");
 
 const dir = path.resolve(__dirname, "../../uploads");
 async function storeUpload(upload: any, name: string) {
+  console.log(upload);
   const { createReadStream, filename } = (await upload.promise) as FileUpload;
   const stream = createReadStream();
   const storedFileName = `${shortId.generate()}-${filename}`;
@@ -44,8 +47,9 @@ async function storeUpload(upload: any, name: string) {
     stream.pipe(writeStream);
   });
 
-  const format = await fileType.fromFile(storedFileUrl);
-  const newStoredFileName = `${name}.${format.ext}`;
+  const format = path.extname(storedFileUrl);
+  console.log(format)
+  const newStoredFileName = `${await getUnique(name)}${name}${format}`;
   fs.renameSync(storedFileUrl, path.resolve(dir, newStoredFileName));
   return newStoredFileName;
 }
@@ -55,11 +59,12 @@ export const upload = async ({
 }: {
   input: FilesInput;
 }): Promise<Files> => {
+  console.log(input);
   await makeDir(UPLOAD_DIR);
 
   const files = await Promise.all(
     input.names.map(async (name, index) => {
-      return await storeUpload(input.files[0][index], name);
+      return await storeUpload(input.files[index], name);
     })
   );
   return {
