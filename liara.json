@@ -4,5 +4,11 @@
   "port": 8080,
   "node": {
     "version": "latest"
-  }
+  },
+  "disks": [
+    {
+      "name": "uploads",
+      "mountTo": "uploads"
+    }
+  ]
 }

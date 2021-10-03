@@ -34,7 +34,7 @@ export async function getAccount(code: string) {
   let data;
   try {
     const oauth = google.oauth2("v2");
-    data = (await oauth.tokeninfo({ id_token: code})).data;
+    data = (await oauth.tokeninfo({ id_token: code })).data;
   } catch (error) {
     throw new Error(errors[8].id);
   }
