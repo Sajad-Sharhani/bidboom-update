@@ -109,26 +109,25 @@ type PathType {
   originPoint: String
   destinationPoint: String
   # city
-  origin: String!
-  destination: String!
-  title: String!
+  origin: String
+  destination: String
+  title: String
   # jan/farvardin: 0, feb/...: 1, ..., 11
-  bestTime: [Int!]!
+  bestTime: [Int!]
   # low:1, ..., dangerous:3
-  dangerRate: Int!
+  dangerRate: Int
   suitableCar: [SuitableCar!]
-  interestingPlaces: Int!
-  placeMap: String!
+  interestingPlaces: Int
   suitablePeople: [SuitablePeople!]
   facilities: [Facilities!]
   # photos/videos/...
-  media: Files_path!
-  places: [Place]!
-  commentsNumber: Int!
-  views: Int!
-  archived: Boolean!
-  liked: Boolean!
-  likesNumber: Int!
+  media: Files_path
+  places: [Place]
+  commentsNumber: Int
+  views: Int
+  archived: Boolean
+  liked: Boolean
+  likesNumber: Int
 }
 
 input CreatePathInput {
