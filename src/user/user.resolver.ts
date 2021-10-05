@@ -14,6 +14,7 @@ import {
   Registerations,
   MutationSendNotificationArgs,
   QueryGetNotificationsArgs,
+  User,
 } from "../schema/user";
 import * as redis from "../utils/asyncRedis";
 import { getToken, getUnique } from "../utils/hash";
@@ -25,6 +26,8 @@ import { sendMessage } from "../utils/sms";
 import notificationModel from "./notification.model";
 import userModel from "./user.model";
 import { CronJob } from "cron";
+
+const defaultUser: User = { points: 1 } as User;
 
 const getGoogleRedirect: QueryResolvers["getGoogleRedirect"] = async ({
   input: redirectUri,
@@ -49,7 +52,7 @@ const createUser: MutationResolvers["createUser"] = async ({
       ICUsers: [],
       type: UserType["SuperAdmin"],
       archives: [],
-      points: 0,
+      points: 1,
     });
 
     return {
@@ -165,6 +168,7 @@ const mutateUser: MutationResolvers["mutateUser"] = async ({
   resolveIdentifierCode(userData.identifierCode, user._id);
 
   return {
+    ...defaultUser,
     ...userData,
     token: await getToken(user._id),
     type: user.type,
@@ -200,6 +204,7 @@ const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
   resolveIdentifierCode(userData.identifierCode, user._id);
 
   return {
+    ...defaultUser,
     ...userData,
     token: await getToken(user._id),
     type: user.type,
@@ -246,6 +251,7 @@ const createGoogleUser: MutationResolvers["createGoogleUser"] = async ({
   }
 
   return {
+    ...defaultUser,
     ...userData,
     token: await getToken(user._id),
     type: user.type,
@@ -271,7 +277,12 @@ const getUserInfo: QueryResolvers["getUserInfo"] = async ({
       pathsNumber = (await pathModel.find({ maker: user._id })).length;
     } catch {}
   }
-  return { ...user.toObject(), pathsNumber };
+  return {
+    ...defaultUser,
+
+    ...user.toObject(),
+    pathsNumber,
+  };
 };
 
 const job = new CronJob("* 10 * * * *", async () => {

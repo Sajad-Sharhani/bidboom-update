@@ -19,7 +19,7 @@ const pathSchema = new mongoose.Schema(
     interestingPlaces: { type: Number, required: false },
     placeMap: StringNonRequired,
     suitablePeople: { type: Array, required: false },
-    Facilities: { type: Array, required: false },
+    facilities: { type: Array, required: false },
     media: { type: Object, required: false },
     places: { type: Array, required: false },
     comments: { type: Array, required: false },

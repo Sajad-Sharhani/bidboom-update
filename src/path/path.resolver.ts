@@ -23,6 +23,8 @@ import { getUnique } from "../utils/hash";
 import { authenticate } from "../utils/index";
 import pathModel from "./path.model";
 
+const defaultPath: PathType = {views: 0, likesNumber: 0} as PathType
+
 const createPath = async (
   { input }: MutationCreatePathArgs,
   { _id }: { _id: string | null }
@@ -98,6 +100,7 @@ const getPath = async (
   } catch {}
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived,
     liked,
@@ -142,6 +145,7 @@ const likePath = async (
   const archived = user.archives.includes(_id) || false;
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived,
     liked: true,
@@ -175,6 +179,7 @@ const dislikePath = async (
   const archived = user.archives.includes(_id) || false;
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived,
     liked: false,
@@ -249,6 +254,7 @@ const removeCommentPath = async (
   const archived = user.archives.includes(_id) || false;
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived,
     liked: true,
@@ -284,6 +290,7 @@ const archivePath = async (
   } catch {}
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived: true,
     liked: path.likes.includes(_id),
@@ -321,6 +328,7 @@ const restorePath = async (
   } catch {}
 
   return {
+    ...defaultPath,
     ...path.toObject(),
     archived: false,
     liked: path.likes.includes(_id),
