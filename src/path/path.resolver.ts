@@ -23,7 +23,7 @@ import { getUnique } from "../utils/hash";
 import { authenticate } from "../utils/index";
 import pathModel from "./path.model";
 
-const defaultPath: PathType = {views: 0, likesNumber: 0} as PathType
+const defaultPath: PathType = { views: 0, likesNumber: 0 } as PathType;
 
 const createPath = async (
   { input }: MutationCreatePathArgs,
