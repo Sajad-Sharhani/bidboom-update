@@ -22,6 +22,9 @@ const pathSchema = new mongoose.Schema(
     Facilities: { type: Array, required: false },
     media: { type: Object, required: false },
     places: { type: Array, required: false },
+    comments: { type: Array, required: false },
+    likes: { type: Array, required: false },
+    views: { type: Number, required: false },
   },
   {
     toJSON: {

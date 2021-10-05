@@ -9,10 +9,17 @@ import {
   QueryGetPathArgs,
   PathType,
   QueryGetPathsArgs,
+  MutationLikePathArgs,
+  MutationCommentPathArgs,
+  MutationArchivePathArgs,
+  CommentPathResponse,
+  RemoveCommentPath,
 } from "../schema/path";
+import { UserType } from "../schema/user";
 import cities from "../statics/city";
 import countries from "../statics/country";
 import provinces from "../statics/province";
+import { getUnique } from "../utils/hash";
 import { authenticate } from "../utils/index";
 import pathModel from "./path.model";
 
@@ -23,7 +30,13 @@ const createPath = async (
   await authenticate(_id);
   let path;
   try {
-    path = await pathModel.create({ ...input, maker: _id });
+    path = await pathModel.create({
+      ...input,
+      maker: _id,
+      views: 0,
+      likes: [],
+      comments: [],
+    });
   } catch {
     throw new Error(errors[14].id);
   }
@@ -61,15 +74,36 @@ const deletePath = async (
   return { done: true };
 };
 
-const getPath = async ({ input }: QueryGetPathArgs): Promise<PathType> => {
+const getPath = async (
+  { input }: QueryGetPathArgs,
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  let liked = false,
+    archived = false;
+  try {
+    user = await authenticate(_id);
+    archived = user.archives.includes(_id) || false;
+  } catch {}
   let path;
   try {
-    path = (await pathModel.findById(input)).toObject();
+    path = await pathModel.findById(input);
+    await path.updateOne({ views: path.views + 1 });
   } catch {
     throw new Error(errors[17].id);
   }
 
-  return path;
+  try {
+    liked = path.likes.includes(user._id) || false;
+  } catch {}
+
+  return {
+    ...path.toObject(),
+    archived,
+    liked,
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
 };
 
 const getPaths = async ({ input }: QueryGetPathsArgs) => {
@@ -83,13 +117,230 @@ const getPaths = async ({ input }: QueryGetPathsArgs) => {
   return paths;
 };
 
+const likePath = async (
+  { input }: MutationLikePathArgs,
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let path;
+  try {
+    path = await pathModel.findById(input);
+    await path.updateOne({ likes: [...new Set([...path.likes, _id])] });
+  } catch {
+    throw new Error(errors[17].id);
+  }
+  const archived = user.archives.includes(_id) || false;
+
+  return {
+    ...path.toObject(),
+    archived,
+    liked: true,
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
+};
+
+const dislikePath = async (
+  { input }: MutationLikePathArgs,
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let path;
+  try {
+    path = await pathModel.findById(input);
+    await path.updateOne({ likes: path.likes.filter((item) => item !== _id) });
+  } catch {
+    throw new Error(errors[17].id);
+  }
+  const archived = user.archives.includes(_id) || false;
+
+  return {
+    ...path.toObject(),
+    archived,
+    liked: false,
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
+};
+const commentPath = async (
+  { input }: MutationCommentPathArgs,
+  { _id }: { _id: string | null }
+): Promise<CommentPathResponse> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let commentId = await getUnique(_id);
+  let path;
+  try {
+    path = await pathModel.findById(input.path);
+    await path.updateOne({
+      comments: [
+        ...path.comments,
+        {
+          author: _id,
+          description: input.description,
+          id: commentId,
+        },
+      ],
+    });
+  } catch {
+    throw new Error(errors[17].id);
+  }
+
+  return {
+    path: input.path,
+    description: input.description,
+    id: commentId,
+  };
+};
+
+const removeCommentPath = async (
+  { input }: { input: RemoveCommentPath },
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let path;
+  try {
+    path = await pathModel.findById(input.path);
+    await path.updateOne({
+      comments: path.comments.filter((item) => item.id !== input.id),
+    });
+  } catch {
+    throw new Error(errors[17].id);
+  }
+  const archived = user.archives.includes(_id) || false;
+
+  return {
+    ...path.toObject(),
+    archived,
+    liked: true,
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
+};
+
+const archivePath = async (
+  { input }: MutationArchivePathArgs,
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let path;
+  try {
+    path = await pathModel.findById(input);
+  } catch {
+    throw new Error(errors[17].id);
+  }
+
+  try {
+    await user.updateOne({ archives: [...user.archives, input] });
+  } catch {}
+
+  return {
+    ...path.toObject(),
+    archived: true,
+    liked: path.likes.includes(_id),
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
+};
+
+const restorePath = async (
+  { input }: MutationArchivePathArgs,
+  { _id }: { _id: string | null }
+): Promise<PathType> => {
+  let user;
+  try {
+    user = await authenticate(_id);
+  } catch {
+    try {
+      user = await authenticate(_id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+
+  let path;
+  try {
+    path = await pathModel.findById(input);
+  } catch {
+    throw new Error(errors[17].id);
+  }
+
+  try {
+    await user.updateOne({
+      archives: user.archives.filter((item) => item !== input),
+    });
+  } catch {}
+
+  return {
+    ...path.toObject(),
+    archived: false,
+    liked: path.likes.includes(_id),
+    commentsNumber: path.comments.length,
+    likesNumber: path.likes.length,
+  };
+};
 export const resolvers: MutationResolvers | QueryResolvers = {
   createPath: createPath as any,
   mutatePath: mutatePath as any,
   deletePath: deletePath as any,
-  getPath,
-  getPaths,
+  getPath: getPath as any,
+  getPaths: getPaths as any,
   getCity: () => cities as any,
   getProvince: () => provinces as any,
   getCountry: () => countries as any,
+  likePath: likePath as any,
+  dislikePath: dislikePath as any,
+  commentPath: commentPath as any,
+  archivePath: archivePath as any,
+  restorePath: restorePath as any,
+  removeCommentPath: removeCommentPath as any,
 };

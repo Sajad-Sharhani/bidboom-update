@@ -71,6 +71,11 @@ input PlaceInput {
   media: Files_pathInput
 }
 
+type Comment {
+  author: ID!
+  description: String!
+  id: ID
+}
 interface Path {
   _id: ID!
   maker: ID!
@@ -92,7 +97,11 @@ interface Path {
   # photos/videos/...
   media: Files_path!
   places: [Place]!
+  comments: [Comment]!
+  likes: [String]!
+  views: Int!
 }
+
 type PathType {
   _id: ID!
   maker: ID!
@@ -115,6 +124,11 @@ type PathType {
   # photos/videos/...
   media: Files_path!
   places: [Place]!
+  commentsNumber: Int!
+  views: Int!
+  archived: Boolean!
+  liked: Boolean!
+  likesNumber: Int!
 }
 
 input CreatePathInput {
@@ -186,8 +200,29 @@ extend type Query {
   getCountry: [Locality!]!
 }
 
+type CommentPathResponse {
+  path: ID!
+  description: String!
+  id: ID!
+}
+input CommentPathInput {
+  path: ID!
+  description: String!
+}
+input RemoveCommentPath {
+  path: ID!
+  id: ID!
+}
+
 extend type Mutation {
   createPath(input: CreatePathInput!): CreatePathResponse!
   mutatePath(input: MutatePathInput!): CreatePathResponse!
   deletePath(input: ID!): DeletePathResponse!
+  likePath(input: ID!): PathType!
+  dislikePath(input: ID!): PathType!
+  commentPath(input: CommentPathInput!): CommentPathResponse!
+  removeCommentPath(input: RemoveCommentPath!): PathType!
+  archivePath(input: ID!): PathType!
+  # opposite of archive
+  restorePath(input: ID!): PathType!
 }

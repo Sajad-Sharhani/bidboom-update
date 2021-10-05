@@ -1,4 +1,5 @@
 import { FilesInput, Files } from "../schema/upload";
+import { getUnique } from "../utils/hash";
 import * as fileType from "file-type";
 import * as fs from "fs";
 import { createWriteStream, unlink } from "fs";
@@ -7,7 +8,6 @@ import makeDir from "make-dir";
 import path from "path";
 import shortId from "shortid";
 import { fileURLToPath } from "url";
-import { getUnique } from "../utils/hash";
 
 const __dirname = fileURLToPath(path.dirname(import.meta.url));
 
@@ -48,7 +48,7 @@ async function storeUpload(upload: any, name: string) {
   });
 
   const format = path.extname(storedFileUrl);
-  console.log(format)
+  console.log(format);
   const newStoredFileName = `${await getUnique(name)}${name}${format}`;
   fs.renameSync(storedFileUrl, path.resolve(dir, newStoredFileName));
   return newStoredFileName;

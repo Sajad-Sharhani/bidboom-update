@@ -32,6 +32,8 @@ interface User {
   ICUsers: [ID]!
   type: UserType!
   registerations: Registerations
+  archives: [ID]!
+
 
   nationalCode: String
   instagram: String
@@ -174,6 +176,7 @@ extend type Query {
   getGoogleRedirect(input: String): GoogleRedirectResponse!
   getUserInfo(input: ID!): GetUserInfoResponse!
   getNotifications(input: UserType): [Notification]!
+  getArchives: [ID]! 
 }
 
 extend type Mutation {

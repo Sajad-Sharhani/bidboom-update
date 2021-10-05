@@ -14,6 +14,25 @@ export type Scalars = {
   Long: any;
 };
 
+export type Comment = {
+  __typename?: 'Comment';
+  author: Scalars['ID'];
+  description: Scalars['String'];
+  id?: Maybe<Scalars['ID']>;
+};
+
+export type CommentPathInput = {
+  path: Scalars['ID'];
+  description: Scalars['String'];
+};
+
+export type CommentPathResponse = {
+  __typename?: 'CommentPathResponse';
+  path: Scalars['ID'];
+  description: Scalars['String'];
+  id: Scalars['ID'];
+};
+
 export type CreatePathInput = {
   origin: Scalars['String'];
   destination: Scalars['String'];
@@ -105,6 +124,12 @@ export type Mutation = {
   createPath: CreatePathResponse;
   mutatePath: CreatePathResponse;
   deletePath: DeletePathResponse;
+  likePath: PathType;
+  dislikePath: PathType;
+  commentPath: CommentPathResponse;
+  removeCommentPath: PathType;
+  archivePath: PathType;
+  restorePath: PathType;
 };
 
 
@@ -119,6 +144,36 @@ export type MutationMutatePathArgs = {
 
 
 export type MutationDeletePathArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type MutationLikePathArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type MutationDislikePathArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type MutationCommentPathArgs = {
+  input: CommentPathInput;
+};
+
+
+export type MutationRemoveCommentPathArgs = {
+  input: RemoveCommentPath;
+};
+
+
+export type MutationArchivePathArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type MutationRestorePathArgs = {
   input: Scalars['ID'];
 };
 
@@ -139,6 +194,9 @@ export type Path = {
   facilities?: Maybe<Array<Facilities>>;
   media: Files_Path;
   places: Array<Maybe<Place>>;
+  comments: Array<Maybe<Comment>>;
+  likes: Array<Maybe<Scalars['String']>>;
+  views: Scalars['Int'];
 };
 
 export type PathType = {
@@ -159,6 +217,11 @@ export type PathType = {
   facilities?: Maybe<Array<Facilities>>;
   media: Files_Path;
   places: Array<Maybe<Place>>;
+  commentsNumber: Scalars['Int'];
+  views: Scalars['Int'];
+  archived: Scalars['Boolean'];
+  liked: Scalars['Boolean'];
+  likesNumber: Scalars['Int'];
 };
 
 export type Place = {
@@ -208,6 +271,11 @@ export type QueryGetPathArgs = {
 
 export type QueryGetPathsArgs = {
   input: Scalars['ID'];
+};
+
+export type RemoveCommentPath = {
+  path: Scalars['ID'];
+  id: Scalars['ID'];
 };
 
 export enum SuitableCar {
@@ -306,11 +374,14 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  CreatePathInput: CreatePathInput;
+  Comment: ResolverTypeWrapper<Comment>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  CommentPathInput: CommentPathInput;
+  CommentPathResponse: ResolverTypeWrapper<CommentPathResponse>;
+  CreatePathInput: CreatePathInput;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   CreatePathResponse: ResolverTypeWrapper<CreatePathResponse>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
   DeletePathResponse: ResolverTypeWrapper<DeletePathResponse>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Facilities: Facilities;
@@ -329,17 +400,21 @@ export type ResolversTypes = {
   PlaceKind: PlaceKind;
   PlaceRecord: PlaceRecord;
   Query: ResolverTypeWrapper<{}>;
+  RemoveCommentPath: RemoveCommentPath;
   SuitableCar: SuitableCar;
   SuitablePeople: SuitablePeople;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  CreatePathInput: CreatePathInput;
+  Comment: Comment;
+  ID: Scalars['ID'];
   String: Scalars['String'];
+  CommentPathInput: CommentPathInput;
+  CommentPathResponse: CommentPathResponse;
+  CreatePathInput: CreatePathInput;
   Int: Scalars['Int'];
   CreatePathResponse: CreatePathResponse;
-  ID: Scalars['ID'];
   DeletePathResponse: DeletePathResponse;
   Boolean: Scalars['Boolean'];
   File_path: File_Path;
@@ -355,6 +430,21 @@ export type ResolversParentTypes = {
   Place: Place;
   PlaceInput: PlaceInput;
   Query: {};
+  RemoveCommentPath: RemoveCommentPath;
+};
+
+export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
+  author?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CommentPathResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CommentPathResponse'] = ResolversParentTypes['CommentPathResponse']> = {
+  path?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CreatePathResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreatePathResponse'] = ResolversParentTypes['CreatePathResponse']> = {
@@ -395,6 +485,12 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createPath?: Resolver<ResolversTypes['CreatePathResponse'], ParentType, ContextType, RequireFields<MutationCreatePathArgs, 'input'>>;
   mutatePath?: Resolver<ResolversTypes['CreatePathResponse'], ParentType, ContextType, RequireFields<MutationMutatePathArgs, 'input'>>;
   deletePath?: Resolver<ResolversTypes['DeletePathResponse'], ParentType, ContextType, RequireFields<MutationDeletePathArgs, 'input'>>;
+  likePath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<MutationLikePathArgs, 'input'>>;
+  dislikePath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<MutationDislikePathArgs, 'input'>>;
+  commentPath?: Resolver<ResolversTypes['CommentPathResponse'], ParentType, ContextType, RequireFields<MutationCommentPathArgs, 'input'>>;
+  removeCommentPath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<MutationRemoveCommentPathArgs, 'input'>>;
+  archivePath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<MutationArchivePathArgs, 'input'>>;
+  restorePath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<MutationRestorePathArgs, 'input'>>;
 };
 
 export type PathResolvers<ContextType = any, ParentType extends ResolversParentTypes['Path'] = ResolversParentTypes['Path']> = {
@@ -415,6 +511,9 @@ export type PathResolvers<ContextType = any, ParentType extends ResolversParentT
   facilities?: Resolver<Maybe<Array<ResolversTypes['Facilities']>>, ParentType, ContextType>;
   media?: Resolver<ResolversTypes['Files_path'], ParentType, ContextType>;
   places?: Resolver<Array<Maybe<ResolversTypes['Place']>>, ParentType, ContextType>;
+  comments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
+  likes?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
+  views?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
 };
 
 export type PathTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PathType'] = ResolversParentTypes['PathType']> = {
@@ -434,6 +533,11 @@ export type PathTypeResolvers<ContextType = any, ParentType extends ResolversPar
   facilities?: Resolver<Maybe<Array<ResolversTypes['Facilities']>>, ParentType, ContextType>;
   media?: Resolver<ResolversTypes['Files_path'], ParentType, ContextType>;
   places?: Resolver<Array<Maybe<ResolversTypes['Place']>>, ParentType, ContextType>;
+  commentsNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  views?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  archived?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  liked?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  likesNumber?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -456,6 +560,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type Resolvers<ContextType = any> = {
+  Comment?: CommentResolvers<ContextType>;
+  CommentPathResponse?: CommentPathResponseResolvers<ContextType>;
   CreatePathResponse?: CreatePathResponseResolvers<ContextType>;
   DeletePathResponse?: DeletePathResponseResolvers<ContextType>;
   File_path?: File_PathResolvers<ContextType>;

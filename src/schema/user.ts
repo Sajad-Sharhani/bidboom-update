@@ -172,6 +172,7 @@ export type Query = {
   getGoogleRedirect: GoogleRedirectResponse;
   getUserInfo: GetUserInfoResponse;
   getNotifications: Array<Maybe<Notification>>;
+  getArchives: Array<Maybe<Scalars['ID']>>;
 };
 
 
@@ -230,6 +231,7 @@ export type User = {
   ICUsers: Array<Maybe<Scalars['ID']>>;
   type: UserType;
   registerations?: Maybe<Registerations>;
+  archives: Array<Maybe<Scalars['ID']>>;
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -450,6 +452,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getGoogleRedirect?: Resolver<ResolversTypes['GoogleRedirectResponse'], ParentType, ContextType, RequireFields<QueryGetGoogleRedirectArgs, never>>;
   getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, never>>;
+  getArchives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
 };
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = {
@@ -484,6 +487,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
   registerations?: Resolver<Maybe<ResolversTypes['Registerations']>, ParentType, ContextType>;
+  archives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

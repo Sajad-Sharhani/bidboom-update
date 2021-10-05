@@ -47,6 +47,7 @@ const createUser: MutationResolvers["createUser"] = async ({
       identifierCode: await getUnique(userData.phoneNumber || userData.email),
       ICUsers: [],
       type: UserType["SuperAdmin"],
+      archives: [],
     });
 
     return {
@@ -309,6 +310,20 @@ const getNotifications: QueryResolvers["getNotifications"] = async ({
   return notifs.map((n) => n.toObject());
 };
 
+const getArchives: QueryResolvers["getArchives"] = async (
+  _,
+  { _id }: { _id: string | null }
+) => {
+  let user;
+  try {
+    user = await userModel.findById(_id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
+
+  return user.archives || [];
+};
+
 export const resolvers: MutationResolvers | QueryResolvers = {
   createUser,
   sendCode,
@@ -320,4 +335,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   getUserInfo,
   getNotifications: getNotifications as any,
   sendNotification: sendNotification as any,
+  getArchives,
 };

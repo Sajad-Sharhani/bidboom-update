@@ -21,4 +21,5 @@ export default [
   { id: "16", description: "failed deleting path" },
   { id: "17", description: "failed finding path" },
   { id: "18", description: "failed finding paths" },
+  { id: "19", description: "you should be signed in" },
 ] as const;

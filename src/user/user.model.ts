@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
     expertise: StringNonRequired,
     registerations: StringNonRequired,
     ICUsers: { type: Array, required: false },
+    archives: { type: Array, required: false },
   },
   {
     toJSON: {
