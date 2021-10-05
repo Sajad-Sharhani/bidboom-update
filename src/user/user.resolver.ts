@@ -1,3 +1,4 @@
+import pathModel from "../path/path.model";
 import errors from "../schema/errors";
 import {
   CreateUserInput,
@@ -48,6 +49,7 @@ const createUser: MutationResolvers["createUser"] = async ({
       ICUsers: [],
       type: UserType["SuperAdmin"],
       archives: [],
+      points: 0,
     });
 
     return {
@@ -263,7 +265,13 @@ const getUserInfo: QueryResolvers["getUserInfo"] = async ({
   if (!user) {
     throw new Error(errors[5].id);
   }
-  return user.toObject();
+  let pathsNumber;
+  if (user.type === UserType["Ambassador"]) {
+    try {
+      pathsNumber = (await pathModel.find({ maker: user._id })).length;
+    } catch {}
+  }
+  return { ...user.toObject(), pathsNumber };
 };
 
 const job = new CronJob("* 10 * * * *", async () => {

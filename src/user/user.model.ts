@@ -22,6 +22,7 @@ const userSchema = new mongoose.Schema(
     registerations: StringNonRequired,
     ICUsers: { type: Array, required: false },
     archives: { type: Array, required: false },
+    points: { type: Number, required: false }
   },
   {
     toJSON: {

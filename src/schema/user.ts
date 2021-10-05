@@ -64,6 +64,8 @@ export type GetUserInfoResponse = {
   identifierCode?: Maybe<Scalars['String']>;
   ICUsers?: Maybe<Array<Maybe<Scalars['ID']>>>;
   type?: Maybe<UserType>;
+  points?: Maybe<Scalars['Int']>;
+  pathsNumber?: Maybe<Scalars['Int']>;
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -232,6 +234,7 @@ export type User = {
   type: UserType;
   registerations?: Maybe<Registerations>;
   archives: Array<Maybe<Scalars['ID']>>;
+  points: Scalars['Int'];
   nationalCode?: Maybe<Scalars['String']>;
   instagram?: Maybe<Scalars['String']>;
   touristGuideCard?: Maybe<Scalars['String']>;
@@ -414,6 +417,8 @@ export type GetUserInfoResponseResolvers<ContextType = any, ParentType extends R
   identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   ICUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['ID']>>>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['UserType']>, ParentType, ContextType>;
+  points?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  pathsNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -488,6 +493,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
   registerations?: Resolver<Maybe<ResolversTypes['Registerations']>, ParentType, ContextType>;
   archives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+  points?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nationalCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   instagram?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   touristGuideCard?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
