@@ -14,6 +14,7 @@ import {
   MutationArchivePathArgs,
   CommentPathResponse,
   RemoveCommentPath,
+  QuerySearchPathArgs,
 } from "../schema/path";
 import { UserType } from "../schema/user";
 import cities from "../statics/city";
@@ -336,6 +337,34 @@ const restorePath = async (
     likesNumber: path.likes.length,
   };
 };
+function escapeRegex(text: string) {
+  return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+}
+const searchPath = async ({
+  input: { pageNum, pageSize, ...searchData },
+}: QuerySearchPathArgs) => {
+  const search: Record<string, string> = searchData || ({} as any);
+  const skips = pageSize * pageNum;
+  let paths;
+
+  const regexSearch: Record<string, RegExp> = {};
+  Object.keys(search).forEach(
+    (i) => (regexSearch[i] = new RegExp(escapeRegex(search[i]), "gi"))
+  );
+  console.log(regexSearch);
+
+  try {
+    paths = await pathModel.find({ ...regexSearch }, null, {
+      skip: skips,
+      limit: pageSize,
+    });
+  } catch (e) {
+    console.log(e);
+    throw new Error(errors[17].id);
+  }
+  return paths.map((p) => p.toObject());
+};
+
 export const resolvers: MutationResolvers | QueryResolvers = {
   createPath: createPath as any,
   mutatePath: mutatePath as any,
@@ -351,4 +380,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   archivePath: archivePath as any,
   restorePath: restorePath as any,
   removeCommentPath: removeCommentPath as any,
+  searchPath: searchPath as any,
 };

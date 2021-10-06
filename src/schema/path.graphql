@@ -189,6 +189,18 @@ type Locality {
   province: Int
 }
 
+input SearchPathInput {
+  # lng lat
+  originPoint: String
+  destinationPoint: String
+  origin: String
+  destination: String
+  title: String
+
+  pageSize: Int!
+  pageNum: Int!
+}
+
 extend type Query {
   # path id
   getPath(input: ID!): PathType!
@@ -197,6 +209,7 @@ extend type Query {
   getCity: [Locality!]!
   getProvince: [Locality!]!
   getCountry: [Locality!]!
+  searchPath(input: SearchPathInput): [PathType]!
 }
 
 type CommentPathResponse {
@@ -224,4 +237,5 @@ extend type Mutation {
   archivePath(input: ID!): PathType!
   # opposite of archive
   restorePath(input: ID!): PathType!
+
 }
