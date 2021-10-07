@@ -71,11 +71,11 @@ const createUser: MutationResolvers["createUser"] = async ({
 
   try {
     user = await userModel.findOne(
-      userData.email
+      userData.email.toLowerCase()
         ? {
-            email: userData.email,
+            email: userData.email.toLowerCase(),
           }
-        : { phoneNumber: userData.phoneNumber }
+        : { phoneNumber: userData.phoneNumber.toLowerCase() }
     );
   } catch {
     throw new Error(errors[1].id);
@@ -143,7 +143,7 @@ const sendCode: MutationResolvers["sendCode"] = async ({
 };
 
 const mutateUser: MutationResolvers["mutateUser"] = async ({
-  input: userData,
+  input:{identifierCode, ...userData},
 }: {
   input: MutateUserInput;
 }) => {
@@ -165,7 +165,7 @@ const mutateUser: MutationResolvers["mutateUser"] = async ({
       throw new Error(errors[6].id);
     }
   }
-  resolveIdentifierCode(userData.identifierCode, user._id);
+  resolveIdentifierCode(identifierCode, user._id);
 
   return {
     ...defaultUser,
@@ -177,7 +177,7 @@ const mutateUser: MutationResolvers["mutateUser"] = async ({
 };
 
 const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
-  input: userData,
+  input:{identifierCode, ...userData},
 }: {
   input: MutateAmbassadorInput;
 }) => {
