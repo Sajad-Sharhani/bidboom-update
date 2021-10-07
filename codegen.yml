@@ -5,18 +5,26 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
+    config:
+      skipTypename: true
   ./src/schema/upload.ts:
     schema: ./src/schema/upload.graphql
     plugins:
       - typescript
       - typescript-resolvers
+    config:
+      skipTypename: true
   ./src/schema/path.ts:
     schema: ./src/schema/path.graphql
     plugins:
       - typescript
       - typescript-resolvers
+    config:
+      skipTypename: true
   ./src/schema/challenge.ts:
     schema: ./src/schema/challenge.graphql
     plugins:
       - typescript
       - typescript-resolvers
+    config:
+      skipTypename: true

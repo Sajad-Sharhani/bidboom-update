@@ -19,7 +19,6 @@ export type CreateGoogleUserInput = {
 };
 
 export type CreateGoogleUserResponse = {
-  __typename?: 'CreateGoogleUserResponse';
   email: Scalars['String'];
   _id: Scalars['ID'];
   token: Scalars['String'];
@@ -35,7 +34,6 @@ export type CreateUserInput = {
 };
 
 export type Entries = {
-  __typename?: 'Entries';
   messageid?: Maybe<Scalars['Int']>;
   message?: Maybe<Scalars['String']>;
   status?: Maybe<Scalars['Int']>;
@@ -52,7 +50,6 @@ export enum Expertise {
 }
 
 export type GetUserInfoResponse = {
-  __typename?: 'GetUserInfoResponse';
   _id: Scalars['ID'];
   name?: Maybe<Scalars['String']>;
   userName?: Maybe<Scalars['String']>;
@@ -74,7 +71,6 @@ export type GetUserInfoResponse = {
 };
 
 export type GoogleRedirectResponse = {
-  __typename?: 'GoogleRedirectResponse';
   url: Scalars['String'];
 };
 
@@ -111,7 +107,6 @@ export type MutateUserInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   createUser: Response;
   sendCode: SendCodeResponse;
   createGoogleUser: CreateGoogleUserResponse;
@@ -151,7 +146,6 @@ export type MutationSendNotificationArgs = {
 };
 
 export type Notification = {
-  __typename?: 'Notification';
   title: Scalars['String'];
   description: Scalars['String'];
   type: UserType;
@@ -164,12 +158,10 @@ export type NotificationInput = {
 };
 
 export type NotificationResponse = {
-  __typename?: 'NotificationResponse';
   done: Scalars['Boolean'];
 };
 
 export type Query = {
-  __typename?: 'Query';
   /** input is `redirect` url that google redirects to, with a string */
   getGoogleRedirect: GoogleRedirectResponse;
   getUserInfo: GetUserInfoResponse;
@@ -198,7 +190,6 @@ export enum Registerations {
 }
 
 export type Response = {
-  __typename?: 'Response';
   _id: Scalars['ID'];
   token: Scalars['String'];
   type: UserType;
@@ -210,12 +201,10 @@ export type SendCodeInput = {
 };
 
 export type SendCodeResponse = {
-  __typename?: 'SendCodeResponse';
   sms?: Maybe<SmsResponse>;
 };
 
 export type SmsResponse = {
-  __typename?: 'SmsResponse';
   status: Scalars['Int'];
   message: Scalars['String'];
 };

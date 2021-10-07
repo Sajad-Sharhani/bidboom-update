@@ -15,13 +15,11 @@ export type Scalars = {
 };
 
 export type File = {
-  __typename?: 'File';
   name: Scalars['String'];
   src: Scalars['String'];
 };
 
 export type Files = {
-  __typename?: 'Files';
   files: Array<Maybe<File>>;
 };
 
@@ -31,7 +29,6 @@ export type FilesInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   upload: Files;
 };
 
@@ -41,7 +38,6 @@ export type MutationUploadArgs = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   getUpload: Files;
 };
 

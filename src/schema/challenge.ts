@@ -24,7 +24,6 @@ export type Challenge = {
 };
 
 export type ChallengeType = {
-  __typename?: 'ChallengeType';
   subject?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   answers?: Maybe<Array<Scalars['String']>>;
@@ -35,7 +34,6 @@ export type ChallengeType = {
 };
 
 export type Challenger = {
-  __typename?: 'Challenger';
   correct?: Maybe<Scalars['Boolean']>;
   answer?: Maybe<Scalars['Int']>;
   challenger?: Maybe<Scalars['ID']>;
@@ -50,7 +48,6 @@ export type CreateChallengeInput = {
 };
 
 export type GetChallengeType = {
-  __typename?: 'GetChallengeType';
   subject?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   answers?: Maybe<Array<Scalars['String']>>;
@@ -60,18 +57,15 @@ export type GetChallengeType = {
 };
 
 export type GetChallengersSuperAdmin = {
-  __typename?: 'GetChallengersSuperAdmin';
   winners?: Maybe<Array<Maybe<Challenger>>>;
   loosers?: Maybe<Array<Maybe<Challenger>>>;
 };
 
 export type IsAnswerRight = {
-  __typename?: 'IsAnswerRight';
   correct?: Maybe<Scalars['Boolean']>;
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   createChallenge: GetChallengeType;
   sendAnswer: IsAnswerRight;
 };
@@ -87,13 +81,11 @@ export type MutationSendAnswerArgs = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   getChallenge: GetChallengeType;
   getChallengersSuperAdmin: GetChallengersSuperAdmin;
 };
 
 export type Sponsor = {
-  __typename?: 'Sponsor';
   image?: Maybe<Scalars['String']>;
   src?: Maybe<Scalars['String']>;
   name?: Maybe<Scalars['String']>;

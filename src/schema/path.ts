@@ -15,7 +15,6 @@ export type Scalars = {
 };
 
 export type Comment = {
-  __typename?: 'Comment';
   author: Scalars['ID'];
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
@@ -27,7 +26,6 @@ export type CommentPathInput = {
 };
 
 export type CommentPathResponse = {
-  __typename?: 'CommentPathResponse';
   path: Scalars['ID'];
   description: Scalars['String'];
   id: Scalars['ID'];
@@ -51,12 +49,10 @@ export type CreatePathInput = {
 };
 
 export type CreatePathResponse = {
-  __typename?: 'CreatePathResponse';
   _id: Scalars['ID'];
 };
 
 export type DeletePathResponse = {
-  __typename?: 'DeletePathResponse';
   done: Scalars['Boolean'];
 };
 
@@ -72,7 +68,6 @@ export enum Facilities {
 }
 
 export type File_Path = {
-  __typename?: 'File_path';
   name: Scalars['String'];
   src: Scalars['String'];
 };
@@ -83,7 +78,6 @@ export type File_PathInput = {
 };
 
 export type Files_Path = {
-  __typename?: 'Files_path';
   files: Array<Maybe<File_Path>>;
 };
 
@@ -92,7 +86,6 @@ export type Files_PathInput = {
 };
 
 export type Locality = {
-  __typename?: 'Locality';
   id: Scalars['String'];
   name: Scalars['String'];
   latitude?: Maybe<Scalars['Long']>;
@@ -120,7 +113,6 @@ export type MutatePathInput = {
 };
 
 export type Mutation = {
-  __typename?: 'Mutation';
   createPath: CreatePathResponse;
   mutatePath: CreatePathResponse;
   deletePath: DeletePathResponse;
@@ -200,7 +192,6 @@ export type Path = {
 };
 
 export type PathType = {
-  __typename?: 'PathType';
   _id: Scalars['ID'];
   maker: Scalars['ID'];
   originPoint?: Maybe<Scalars['String']>;
@@ -224,7 +215,6 @@ export type PathType = {
 };
 
 export type Place = {
-  __typename?: 'Place';
   title?: Maybe<Scalars['String']>;
   kind?: Maybe<PlaceKind>;
   description?: Maybe<Scalars['String']>;
@@ -254,7 +244,6 @@ export enum PlaceRecord {
 }
 
 export type Query = {
-  __typename?: 'Query';
   getPath: PathType;
   getPaths: Array<PathType>;
   getCity: Array<Locality>;

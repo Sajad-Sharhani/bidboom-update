@@ -149,6 +149,7 @@ const likePath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived,
     liked: true,
     commentsNumber: path.comments.length,
@@ -182,6 +183,7 @@ const dislikePath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived,
     liked: false,
     commentsNumber: path.comments.length,
@@ -257,6 +259,7 @@ const removeCommentPath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived,
     liked: true,
     commentsNumber: path.comments.length,
@@ -293,6 +296,7 @@ const archivePath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived: true,
     liked: path.likes.includes(_id),
     commentsNumber: path.comments.length,
@@ -331,6 +335,7 @@ const restorePath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived: false,
     liked: path.likes.includes(_id),
     commentsNumber: path.comments.length,
