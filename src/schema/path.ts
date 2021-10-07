@@ -196,7 +196,7 @@ export type Path = {
   places: Array<Maybe<Place>>;
   comments: Array<Maybe<Comment>>;
   likes: Array<Maybe<Scalars['String']>>;
-  views: Scalars['Int'];
+  views: Array<Maybe<Scalars['ID']>>;
 };
 
 export type PathType = {
@@ -530,7 +530,7 @@ export type PathResolvers<ContextType = any, ParentType extends ResolversParentT
   places?: Resolver<Array<Maybe<ResolversTypes['Place']>>, ParentType, ContextType>;
   comments?: Resolver<Array<Maybe<ResolversTypes['Comment']>>, ParentType, ContextType>;
   likes?: Resolver<Array<Maybe<ResolversTypes['String']>>, ParentType, ContextType>;
-  views?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  views?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
 };
 
 export type PathTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PathType'] = ResolversParentTypes['PathType']> = {

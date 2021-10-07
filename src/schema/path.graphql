@@ -99,7 +99,7 @@ interface Path {
   places: [Place]!
   comments: [Comment]!
   likes: [String]!
-  views: Int!
+  views: [ID]!
 }
 
 type PathType {
@@ -237,5 +237,4 @@ extend type Mutation {
   archivePath(input: ID!): PathType!
   # opposite of archive
   restorePath(input: ID!): PathType!
-
 }

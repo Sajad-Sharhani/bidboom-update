@@ -18,3 +18,17 @@ export async function authenticate(
   }
   return user;
 }
+
+export async function multiAuthenticate(id: string) {
+  let user;
+  try {
+    user = await authenticate(id);
+  } catch {
+    try {
+      user = await authenticate(id, UserType["User"]);
+    } catch {
+      throw new Error(errors[19].id);
+    }
+  }
+  return user;
+}

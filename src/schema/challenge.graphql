@@ -1,0 +1,70 @@
+type Sponsor {
+  image: String
+  src: String
+  name: String
+}
+
+input SponsorInput {
+  image: String
+  src: String
+  name: String
+}
+type Challenger {
+  correct: Boolean
+  answer: Int
+  challenger: ID
+}
+
+interface Challenge {
+  subject: String
+  description: String
+  answers: [String!]
+  correct: Int
+  sponsors: [Sponsor]
+  winnersNumber: Int
+  loosersNumber: Int
+}
+
+type ChallengeType {
+  subject: String
+  description: String
+  answers: [String!]
+  correct: Int
+  sponsors: [Sponsor]
+  winnersNumber: Int
+  loosersNumber: Int
+}
+
+type GetChallengeType {
+  subject: String
+  description: String
+  answers: [String!]
+  sponsors: [Sponsor]
+  winnersNumber: Int
+  loosersNumber: Int
+}
+
+type GetChallengersSuperAdmin {
+  winners: [Challenger]
+  loosers: [Challenger]
+}
+extend type Query {
+  getChallenge: GetChallengeType!
+  getChallengersSuperAdmin: GetChallengersSuperAdmin!
+}
+
+input CreateChallengeInput {
+  subject: String
+  description: String
+  answers: [String!]
+  correct: Int
+  sponsors: [SponsorInput]
+}
+type IsAnswerRight {
+  correct: Boolean
+}
+
+extend type Mutation {
+  createChallenge(input: CreateChallengeInput!): GetChallengeType!
+  sendAnswer(input: Int): IsAnswerRight!
+}

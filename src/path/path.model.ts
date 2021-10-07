@@ -24,7 +24,7 @@ const pathSchema = new mongoose.Schema(
     places: { type: Array, required: false },
     comments: { type: Array, required: false },
     likes: { type: Array, required: false },
-    views: { type: Number, required: false },
+    views: { type: Array, required: false },
   },
   {
     toJSON: {

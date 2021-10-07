@@ -22,4 +22,8 @@ export default [
   { id: "17", description: "failed finding path" },
   { id: "18", description: "failed finding paths" },
   { id: "19", description: "you should be signed in" },
+  { id: "20", description: "failed clearing challenges" },
+  { id: "21", description: "failed creating challenge" },
+  { id: "22", description: "failed finding challenge" },
+  { id: "23", description: "already answered" },
 ] as const;

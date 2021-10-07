@@ -36,7 +36,7 @@ const createPath = async (
     path = await pathModel.create({
       ...input,
       maker: _id,
-      views: 0,
+      views: [],
       likes: [],
       comments: [],
     });
@@ -91,7 +91,7 @@ const getPath = async (
   let path;
   try {
     path = await pathModel.findById(input);
-    await path.updateOne({ views: path.views + 1 });
+    await path.updateOne({ views: [...new Set([...path.views, _id])] });
   } catch {
     throw new Error(errors[17].id);
   }
@@ -103,6 +103,7 @@ const getPath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
+    views: path.views.length,
     archived,
     liked,
     commentsNumber: path.comments.length,
@@ -154,7 +155,6 @@ const likePath = async (
     likesNumber: path.likes.length,
   };
 };
-
 const dislikePath = async (
   { input }: MutationLikePathArgs,
   { _id }: { _id: string | null }
