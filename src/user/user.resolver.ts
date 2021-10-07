@@ -143,7 +143,7 @@ const sendCode: MutationResolvers["sendCode"] = async ({
 };
 
 const mutateUser: MutationResolvers["mutateUser"] = async ({
-  input:{identifierCode, ...userData},
+  input: { identifierCode, ...userData },
 }: {
   input: MutateUserInput;
 }) => {
@@ -177,7 +177,7 @@ const mutateUser: MutationResolvers["mutateUser"] = async ({
 };
 
 const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
-  input:{identifierCode, ...userData},
+  input: { identifierCode, ...userData },
 }: {
   input: MutateAmbassadorInput;
 }) => {
@@ -201,7 +201,7 @@ const mutateAmbassador: MutationResolvers["mutateAmbassador"] = async ({
       throw new Error(errors[6].id);
     }
   }
-  resolveIdentifierCode(userData.identifierCode, user._id);
+  resolveIdentifierCode(identifierCode, user._id);
 
   return {
     ...defaultUser,

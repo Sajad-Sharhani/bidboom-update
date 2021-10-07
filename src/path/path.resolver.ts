@@ -111,7 +111,17 @@ const getPath = async (
   };
 };
 
-const getPaths = async ({ input }: QueryGetPathsArgs) => {
+const getPaths = async (
+  { input }: QueryGetPathsArgs,
+  { _id }: { _id: string | null }
+) => {
+  let user: any;
+  let archived = false;
+
+  try {
+    user = await authenticate(_id);
+    archived = user.archives.includes(_id) || false;
+  } catch {}
   let paths;
   try {
     paths = await pathModel.find({ maker: input });
@@ -119,7 +129,17 @@ const getPaths = async ({ input }: QueryGetPathsArgs) => {
     throw new Error(errors[17].id);
   }
 
-  return paths;
+  return paths.map((path) => {
+    return {
+      ...defaultPath,
+      ...path.toObject(),
+      views: path.views.length,
+      archived,
+      liked: path.likes.includes(user?._id) || false,
+      commentsNumber: path.comments.length,
+      likesNumber: path.likes.length,
+    };
+  });
 };
 
 const likePath = async (

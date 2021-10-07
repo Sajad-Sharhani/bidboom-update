@@ -30,4 +30,5 @@ export const verifyToken = (token: string) => {
 };
 
 // export const getUnique = async (str: string) => uniqid(str || "rand" );
-export const getUnique = async (str: string) => Date.now().toString(36).substring(2, 20);
+export const getUnique = async (str: string) =>
+  Date.now().toString(36).substring(2, 20);
