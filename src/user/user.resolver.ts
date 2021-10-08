@@ -343,6 +343,23 @@ const getArchives: QueryResolvers["getArchives"] = async (
   return user.archives || [];
 };
 
+const resetIdentifierCode = async (_: any, { _id }: { _id: string | null }) => {
+  let user;
+  try {
+    user = await userModel.findById(_id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
+  try {
+    await user.update({
+      identifierCode: await getUnique("rand"),
+    });
+  } catch {
+    throw new Error(errors[6].id);
+  }
+
+  return { identifierCode: user.identifierCode };
+};
 export const resolvers: MutationResolvers | QueryResolvers = {
   createUser,
   sendCode,
@@ -355,4 +372,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   getNotifications: getNotifications as any,
   sendNotification: sendNotification as any,
   getArchives,
+  resetIdentifierCode: resetIdentifierCode as any,
 };

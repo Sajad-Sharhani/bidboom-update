@@ -113,6 +113,7 @@ export type Mutation = {
   mutateUser: Response;
   mutateAmbassador: Response;
   sendNotification: NotificationResponse;
+  resetIdentifierCode: ResetIdentifierCodeResponse;
 };
 
 
@@ -188,6 +189,10 @@ export enum Registerations {
   Email = 'Email',
   PhoneNumber = 'PhoneNumber'
 }
+
+export type ResetIdentifierCodeResponse = {
+  identifierCode?: Maybe<Scalars['String']>;
+};
 
 export type Response = {
   _id: Scalars['ID'];
@@ -340,6 +345,7 @@ export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Query: ResolverTypeWrapper<{}>;
   Registerations: Registerations;
+  ResetIdentifierCodeResponse: ResolverTypeWrapper<ResetIdentifierCodeResponse>;
   Response: ResolverTypeWrapper<Response>;
   SendCodeInput: SendCodeInput;
   SendCodeResponse: ResolverTypeWrapper<SendCodeResponse>;
@@ -367,6 +373,7 @@ export type ResolversParentTypes = {
   NotificationResponse: NotificationResponse;
   Boolean: Scalars['Boolean'];
   Query: {};
+  ResetIdentifierCodeResponse: ResetIdentifierCodeResponse;
   Response: Response;
   SendCodeInput: SendCodeInput;
   SendCodeResponse: SendCodeResponse;
@@ -428,6 +435,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   mutateUser?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationMutateUserArgs, never>>;
   mutateAmbassador?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationMutateAmbassadorArgs, never>>;
   sendNotification?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<MutationSendNotificationArgs, never>>;
+  resetIdentifierCode?: Resolver<ResolversTypes['ResetIdentifierCodeResponse'], ParentType, ContextType>;
 };
 
 export type NotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -447,6 +455,11 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, never>>;
   getArchives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
+};
+
+export type ResetIdentifierCodeResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResetIdentifierCodeResponse'] = ResolversParentTypes['ResetIdentifierCodeResponse']> = {
+  identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type ResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Response'] = ResolversParentTypes['Response']> = {
@@ -499,6 +512,7 @@ export type Resolvers<ContextType = any> = {
   Notification?: NotificationResolvers<ContextType>;
   NotificationResponse?: NotificationResponseResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  ResetIdentifierCodeResponse?: ResetIdentifierCodeResponseResolvers<ContextType>;
   Response?: ResponseResolvers<ContextType>;
   SendCodeResponse?: SendCodeResponseResolvers<ContextType>;
   SmsResponse?: SmsResponseResolvers<ContextType>;
