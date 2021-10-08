@@ -1,10 +1,20 @@
 export const app_version = () => {
   return {
-    ios_version: "0.0.1",
-    ios_force_version: "0.0.1",
-    ios_update_link: "google.com",
-    android_version: "0.0.1",
-    android_force_version: "0.0.1",
-    android_update_link: "google.com",
+    ambassador: {
+      ios_version: "1.1.0",
+      ios_force_version: "1.0.1",
+      ios_update_link: "https://bidboom.ir",
+      android_version: "1.1.0",
+      android_force_version: "1.0.1",
+      android_update_link: "https://bidboom.ir",
+    },
+    user: {
+      ios_version: "1.0.1",
+      ios_force_version: "1.0.0",
+      ios_update_link: "https://bidboom.ir",
+      android_version: "1.0.1",
+      android_force_version: "1.0.0",
+      android_update_link: "https://bidboom.ir",
+    },
   };
 };
