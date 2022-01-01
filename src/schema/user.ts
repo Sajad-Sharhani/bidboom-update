@@ -167,6 +167,7 @@ export type Query = {
   getGoogleRedirect: GoogleRedirectResponse;
   getUserInfo: GetUserInfoResponse;
   getNotifications: Array<Maybe<Notification>>;
+  getPopularAmbassadors: Array<Maybe<User>>;
   getArchives: Array<Maybe<Scalars['ID']>>;
 };
 
@@ -454,6 +455,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getGoogleRedirect?: Resolver<ResolversTypes['GoogleRedirectResponse'], ParentType, ContextType, RequireFields<QueryGetGoogleRedirectArgs, never>>;
   getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, never>>;
+  getPopularAmbassadors?: Resolver<Array<Maybe<ResolversTypes['User']>>, ParentType, ContextType>;
   getArchives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
 };
 

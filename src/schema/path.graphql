@@ -209,6 +209,7 @@ extend type Query {
   getCity: [Locality!]!
   getProvince: [Locality!]!
   getCountry: [Locality!]!
+  getPopularPaths: [PathType!]!
   searchPath(input: SearchPathInput): [PathType]!
 }
 

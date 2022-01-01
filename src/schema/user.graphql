@@ -178,6 +178,7 @@ extend type Query {
   getGoogleRedirect(input: String): GoogleRedirectResponse!
   getUserInfo(input: ID!): GetUserInfoResponse!
   getNotifications(input: UserType): [Notification]!
+  getPopularAmbassadors: [User]!
   getArchives: [ID]!
 }
 

@@ -8,6 +8,8 @@ const challengeSchema = new mongoose.Schema(
     answers: { type: Array, required: false },
     correct: { type: Array, required: false },
     sponsors: { type: Array, required: false },
+    isActive: { type: Boolean, required: false },
+    media: { type: Object, required: false },
     winnersNumber: { type: Number, required: false },
     loosersNumber: { type: Number, required: false },
   },
@@ -24,6 +26,7 @@ const challengerSchema = new mongoose.Schema(
     correct: Boolean,
     answer: Number,
     challenger: String,
+    challenge: String,
   },
   {
     toJSON: {

@@ -1,3 +1,21 @@
+type File_challenge {
+  name: String!
+  src: String!
+}
+input File_challengeInput {
+  name: String!
+  src: String!
+}
+
+# same as Files, but for hacking the generator
+type Files_challenge {
+  files: [File_challenge]!
+}
+
+input Files_challengeInput {
+  files: [File_challengeInput]!
+}
+
 type Sponsor {
   image: String
   src: String
@@ -13,6 +31,7 @@ type Challenger {
   correct: Boolean
   answer: Int
   challenger: ID
+  challenge: ID
 }
 
 interface Challenge {
@@ -21,6 +40,8 @@ interface Challenge {
   answers: [String!]
   correct: Int
   sponsors: [Sponsor]
+  isActive: Boolean
+  media: [Files_challenge]
   winnersNumber: Int
   loosersNumber: Int
 }
@@ -31,6 +52,8 @@ type ChallengeType {
   answers: [String!]
   correct: Int
   sponsors: [Sponsor]
+  isActive: Boolean
+  media: [Files_challenge]
   winnersNumber: Int
   loosersNumber: Int
 }
@@ -40,6 +63,8 @@ type GetChallengeType {
   description: String
   answers: [String!]
   sponsors: [Sponsor]
+  isActive: Boolean
+  media: [Files_challenge]
   winnersNumber: Int
   loosersNumber: Int
 }
@@ -48,9 +73,19 @@ type GetChallengersSuperAdmin {
   winners: [Challenger]
   loosers: [Challenger]
 }
+input GetChallengersSuperAdminInput {
+  challenge: ID!
+  pageNum: Int!
+  pageSize: Int!
+}
+
 extend type Query {
   getChallenge: GetChallengeType!
-  getChallengersSuperAdmin: GetChallengersSuperAdmin!
+  getChallengesSuperAdmin: [GetChallengeType]!
+  # input: challenge id
+  getChallengersSuperAdmin(
+    input: GetChallengersSuperAdminInput!
+  ): GetChallengersSuperAdmin!
 }
 
 input CreateChallengeInput {
@@ -59,6 +94,7 @@ input CreateChallengeInput {
   answers: [String!]
   correct: Int
   sponsors: [SponsorInput]
+  media: [Files_challengeInput]
 }
 type IsAnswerRight {
   correct: Boolean
@@ -66,5 +102,7 @@ type IsAnswerRight {
 
 extend type Mutation {
   createChallenge(input: CreateChallengeInput!): GetChallengeType!
+  disableChallenge(input: ID!): GetChallengeType!
+  deleteChallenge(input: ID!): GetChallengeType!
   sendAnswer(input: Int): IsAnswerRight!
 }

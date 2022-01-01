@@ -103,11 +103,11 @@ const getPath = async (
   return {
     ...defaultPath,
     ...path.toObject(),
-    views: path.views.length,
+    views: path?.views.length || 0,
     archived,
     liked,
-    commentsNumber: path.comments.length,
-    likesNumber: path.likes.length,
+    commentsNumber: path?.comments.length || 0,
+    likesNumber: path?.likes.length || 0,
   };
 };
 
@@ -133,11 +133,11 @@ const getPaths = async (
     return {
       ...defaultPath,
       ...path.toObject(),
-      views: path.views.length,
-      archived,
-      liked: path.likes.includes(user?._id) || false,
-      commentsNumber: path.comments.length,
-      likesNumber: path.likes.length,
+      views: path?.views.length || 0,
+      archived: !!archived,
+      liked: path?.likes.includes(user?._id) || false,
+      commentsNumber: path?.comments?.length || 0,
+      likesNumber: path?.likes?.length || 0,
     };
   });
 };
@@ -365,9 +365,15 @@ const restorePath = async (
 function escapeRegex(text: string) {
   return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 }
-const searchPath = async ({
-  input: { pageNum, pageSize, ...searchData },
-}: QuerySearchPathArgs) => {
+const searchPath = async (
+  { input: { pageNum, pageSize, ...searchData } }: QuerySearchPathArgs,
+  { _id }: { _id: string | null }
+) => {
+  let user: any;
+
+  try {
+    user = await authenticate(_id);
+  } catch {}
   const search: Record<string, string> = searchData || ({} as any);
   const skips = pageSize * pageNum;
   let paths;
@@ -376,7 +382,6 @@ const searchPath = async ({
   Object.keys(search).forEach(
     (i) => (regexSearch[i] = new RegExp(escapeRegex(search[i]), "gi"))
   );
-  console.log(regexSearch);
 
   try {
     paths = await pathModel.find({ ...regexSearch }, null, {
@@ -387,7 +392,47 @@ const searchPath = async ({
     console.log(e);
     throw new Error(errors[17].id);
   }
-  return paths.map((p) => p.toObject());
+  return paths.map((p) => ({
+    ...defaultPath,
+    ...p.toObject(),
+    views: p?.views.length || 0,
+    archived: user?.archives?.includes(_id) || false,
+    liked: !!p?.likes.includes(_id),
+    commentsNumber: p?.comments.length || 0,
+    likesNumber: p?.likes.length || 0,
+  }));
+};
+
+const getPopularPaths = async (
+  _: any,
+  { _id }: { _id: string | null }
+) => {
+  let user: any;
+
+  try {
+    user = await authenticate(_id);
+  } catch {}
+
+  let paths;
+  try {
+    paths = await pathModel.find({}, null, {
+      skip: 0,
+      limit: 8,
+      sort: { likesNumber: 1,commentsNumber: 1  },
+    });
+  } catch (e) {
+    console.log(e);
+    throw new Error(errors[17].id);
+  }
+  return paths.map((p) => ({
+    ...defaultPath,
+    ...p.toObject(),
+    views: p?.views.length || 0,
+    archived: user?.archives?.includes(_id) || false,
+    liked: !!p?.likes.includes(_id),
+    commentsNumber: p?.comments.length || 0,
+    likesNumber: p?.likes.length || 0,
+  }));
 };
 
 export const resolvers: MutationResolvers | QueryResolvers = {
@@ -406,4 +451,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   restorePath: restorePath as any,
   removeCommentPath: removeCommentPath as any,
   searchPath: searchPath as any,
+  getPopularPaths: getPopularPaths as any,
 };
