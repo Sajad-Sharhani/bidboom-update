@@ -26,5 +26,9 @@ export default [
   { id: "21", description: "failed creating challenge" },
   { id: "22", description: "failed finding challenge" },
   { id: "23", description: "already answered" },
-  { id: "24", description: "disable (isActive = false) the current challenge now, then create new one" },
+  {
+    id: "24",
+    description:
+      "disable (isActive = false) the current challenge now, then create new one",
+  },
 ] as const;

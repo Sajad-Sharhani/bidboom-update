@@ -383,5 +383,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   sendNotification: sendNotification as any,
   getArchives,
   resetIdentifierCode: resetIdentifierCode as any,
-  getPopularAmbassadors: getPopularAmbassadors as any
+  getPopularAmbassadors: getPopularAmbassadors as any,
 };

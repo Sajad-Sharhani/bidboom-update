@@ -47,7 +47,7 @@ const getChallenge = async (
   try {
     challenge = await challengeModel.findOne({ isActive: true });
     if (!challenge) {
-      throw new Error()
+      throw new Error();
     }
   } catch {
     throw new Error(errors[22].id);

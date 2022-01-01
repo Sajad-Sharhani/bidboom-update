@@ -403,10 +403,7 @@ const searchPath = async (
   }));
 };
 
-const getPopularPaths = async (
-  _: any,
-  { _id }: { _id: string | null }
-) => {
+const getPopularPaths = async (_: any, { _id }: { _id: string | null }) => {
   let user: any;
 
   try {
@@ -418,7 +415,7 @@ const getPopularPaths = async (
     paths = await pathModel.find({}, null, {
       skip: 0,
       limit: 8,
-      sort: { likesNumber: 1,commentsNumber: 1  },
+      sort: { likesNumber: 1, commentsNumber: 1 },
     });
   } catch (e) {
     console.log(e);
