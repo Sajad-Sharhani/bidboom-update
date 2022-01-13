@@ -42,6 +42,16 @@ interface User {
   expertise: Expertise
 }
 
+type User_type {
+  _id: ID!
+  name: String
+  email: String
+  image: String
+  description: String
+  ICUsers: [ID]!
+  type: UserType!
+  archives: [ID]!
+}
 type Response {
   _id: ID!
   token: String!
@@ -178,7 +188,7 @@ extend type Query {
   getGoogleRedirect(input: String): GoogleRedirectResponse!
   getUserInfo(input: ID!): GetUserInfoResponse!
   getNotifications(input: UserType): [Notification]!
-  getPopularAmbassadors: [User]!
+  getPopularAmbassadors: [User_type]!
   getArchives: [ID]!
 }
 

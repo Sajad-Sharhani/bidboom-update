@@ -361,14 +361,16 @@ const resetIdentifierCode = async (_: any, { _id }: { _id: string | null }) => {
   return { identifierCode: user.identifierCode };
 };
 
-const getPopularAmbassadors = async (): Promise<User[]> => {
-  const users = await userModel.find({ type: UserType["Ambassador"] }, null, {
-    skip: 0,
-    limit: 8,
-    sort: { likesNumber: 1, commentsNumber: 1 },
-  });
-  return users.map((u) => u.toObject());
-};
+const getPopularAmbassadors: QueryResolvers["getPopularAmbassadors"] =
+  async (): Promise<User[]> => {
+    const users = await userModel.find({ type: UserType["Ambassador"] }, null, {
+      skip: 0,
+      limit: 8,
+      sort: { likesNumber: 1, commentsNumber: 1 },
+    });
+    console.log(users.map((u) => ({ ...u.toObject(), __typename: "User" })));
+    return users.map((u) => ({ ...u.toObject() }));
+  };
 
 export const resolvers: MutationResolvers | QueryResolvers = {
   createUser,
