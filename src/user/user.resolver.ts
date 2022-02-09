@@ -77,7 +77,8 @@ const createUser: MutationResolvers["createUser"] = async ({
           }
         : { phoneNumber: userData.phoneNumber.toLowerCase() }
     );
-  } catch {
+  } catch (e) {
+    console.log(e);
     throw new Error(errors[1].id);
   }
 
@@ -92,7 +93,8 @@ const createUser: MutationResolvers["createUser"] = async ({
           ? Registerations["PhoneNumber"]
           : Registerations["Email"],
       });
-    } catch {
+    } catch (e) {
+      console.log(e);
       throw new Error(errors[1].id);
     }
   }
