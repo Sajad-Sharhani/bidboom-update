@@ -61,8 +61,11 @@ const createUser: MutationResolvers["createUser"] = async ({
       _id: admin._id,
     };
   }
+  const email = userData.email;
+  const phoneNumber = userData.phoneNumber;
 
-  const code = await redis.get(userData.phoneNumber ?? userData.email);
+  const code = await redis.get(phoneNumber ?? email);
+  console.log("code2: ", code);
   if (code !== userData.code) {
     throw new Error(errors[0].id);
   }
@@ -121,6 +124,9 @@ const sendCode: MutationResolvers["sendCode"] = async ({
 
   const code = generate4digitNum();
   await redis.setex(phoneNumber ?? email, THREE_MINS, code);
+  const code2 = await redis.get(phoneNumber ?? email);
+  console.log("code2: ", code2);
+
   const text = `کاربر عزیز بیدبوم، 
 کد تایید موقت حساب شما در بیدبوم ${code} می باشد.`;
 

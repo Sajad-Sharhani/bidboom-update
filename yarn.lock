@@ -1900,18 +1900,18 @@ ajv@^6.12.3:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-altair-express-middleware@^4.0.6:
-  version "4.0.11"
-  resolved "https://registry.npmjs.org/altair-express-middleware/-/altair-express-middleware-4.0.11.tgz"
-  integrity sha512-oP3A95AzJ2k7pv6HXXz32WVKC3zCZtnAJ89lFp80ozsqrlEXOCit4s4sWMKftgV+hKbUEwqn+xBpJgWsZrPWbQ==
+altair-express-middleware@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/altair-express-middleware/-/altair-express-middleware-4.4.0.tgz#0494372d4cb560bd9a9fed069716e144e04ae0f2"
+  integrity sha512-aF/5E4TQNQN6oadpCznShNtjOBHrfYlW3M/1OeEaH+w9S8u1bTtdEDVGQF5vsUQE+rBuRaBGOCgogr9jOaDigQ==
   dependencies:
-    altair-static "^4.0.11"
+    altair-static "^4.4.0"
     express "^4.16.2"
 
-altair-graphql-core@^4.0.11:
-  version "4.0.11"
-  resolved "https://registry.npmjs.org/altair-graphql-core/-/altair-graphql-core-4.0.11.tgz"
-  integrity sha512-X40N49vEDft8Y/sETzGdzYl4uirfv/kQFxkOy2AFZdP32gYelxWKLdx+qDZMxPY3n92f3y5+X+Zm928gxXxI3w==
+altair-graphql-core@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/altair-graphql-core/-/altair-graphql-core-4.4.0.tgz#db6afa8171fd2dc7679e5f9d2fd143e446a59314"
+  integrity sha512-OuP/5C6rNZrpseFRZbZ3B9kkPrF+BNCe7ebS2pIa1X5yFlU1ItVUgFopWmFLKfbbXLf2THK+Ix4r8n/Z0sCuVw==
   dependencies:
     "@apollo/client" "^3.3.20"
     actioncable "^5.2.6"
@@ -1920,6 +1920,7 @@ altair-graphql-core@^4.0.11:
     apollo-link-http "^1.5.17"
     aws-appsync-auth-link "^3.0.2"
     aws-appsync-subscription-link "^3.0.3"
+    convert-css-color-name-to-hex "^0.1.1"
     deepmerge "^4.2.2"
     graphql "^15.5.1"
     graphql-ws "^5.1.2"
@@ -1930,12 +1931,12 @@ altair-graphql-core@^4.0.11:
     util "^0.12.4"
     uuid "^8.3.2"
 
-altair-static@^4.0.11:
-  version "4.0.11"
-  resolved "https://registry.npmjs.org/altair-static/-/altair-static-4.0.11.tgz"
-  integrity sha512-5uG5gpV73IuCShi0t8a/TFOJxEBDEQQfecADI4OC5GlpSunlMs2UK6miNeoEGGPI17uHwaiEXj5vjIIiosS35Q==
+altair-static@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/altair-static/-/altair-static-4.4.0.tgz#1fad9ff13ef36c0082492403cb9a1cfe559c6ff8"
+  integrity sha512-guXOspuwGbqvlCEu+iUB66yZhTyyUygNPG6TQpru+Q/QZwwOiJGJZHPsrsmC+DxOTVkX/dDsISfWI8UJ6yAiBw==
   dependencies:
-    altair-graphql-core "^4.0.11"
+    altair-graphql-core "^4.4.0"
 
 ansi-align@^3.0.0:
   version "3.0.0"
@@ -3026,6 +3027,14 @@ content-type@^1.0.4, content-type@~1.0.4:
   resolved "https://registry.npmjs.org/content-type/-/content-type-1.0.4.tgz"
   integrity sha512-hIP3EEPs8tB9AT1L+NUqtwOAps4mk2Zob89MWXMHjHWg9milF/j4osnnQLXBCBFBk/tvIG/tUc9mOUJiPBhPXA==
 
+convert-css-color-name-to-hex@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/convert-css-color-name-to-hex/-/convert-css-color-name-to-hex-0.1.1.tgz#38ac4d27ca470593fd663b18a072a308926a35a2"
+  integrity sha1-OKxNJ8pHBZP9ZjsYoHKjCJJqNaI=
+  dependencies:
+    css-color-names "0.0.3"
+    is-css-color-name "^0.1.1"
+
 convert-source-map@^1.4.0, convert-source-map@^1.6.0, convert-source-map@^1.7.0:
   version "1.8.0"
   resolved "https://registry.npmjs.org/convert-source-map/-/convert-source-map-1.8.0.tgz"
@@ -3147,6 +3156,16 @@ crypto-random-string@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-2.0.0.tgz"
   integrity sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==
+
+css-color-names@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.2.tgz#fba18e8cff86579572d749c146c47ee83f0ea955"
+  integrity sha1-+6GOjP+GV5Vy10nBRsR+6D8OqVU=
+
+css-color-names@0.0.3:
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.3.tgz#de0cef16f4d8aa8222a320d5b6d7e9bbada7b9f6"
+  integrity sha1-3gzvFvTYqoIioyDVttfpu62nufY=
 
 cssfilter@0.0.10:
   version "0.0.10"
@@ -4637,6 +4656,13 @@ is-core-module@^2.2.0:
   integrity sha512-wShG8vs60jKfPWpF2KZRaAtvt3a20OAn7+IJ6hLPECpSABLcKtFKTTI4ZtH5QcBruBHlq+WsdHWyz0BCZW7svQ==
   dependencies:
     has "^1.0.3"
+
+is-css-color-name@^0.1.1:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/is-css-color-name/-/is-css-color-name-0.1.3.tgz#ea3b51bc901d8a243d32c9b7873d0680dbbef7f1"
+  integrity sha1-6jtRvJAdiiQ9Msm3hz0GgNu+9/E=
+  dependencies:
+    css-color-names "0.0.2"
 
 is-date-object@^1.0.1:
   version "1.0.5"

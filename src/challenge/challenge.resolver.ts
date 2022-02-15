@@ -31,6 +31,7 @@ const createChallenge = async (
       ...input,
       winnersNumber: 0,
       loosersNumber: 0,
+      isActive: true,
     });
   } catch {
     throw new Error(errors[21].id);

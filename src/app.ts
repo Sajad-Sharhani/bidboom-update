@@ -104,7 +104,7 @@ class App {
     const uri =
       process.env.NODE_ENV === "production"
         ? `${DATABASE_URL}`
-        : `mongodb://${MONGO_PATH}/${TEST ? "bidroom-test" : "bidroom"}`;
+        : `mongodb://${MONGO_PATH}/${TEST ? "bidboom" : "bidboom"}`;
     mongoose.connect(uri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
