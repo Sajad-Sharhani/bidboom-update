@@ -74,11 +74,11 @@ const createUser: MutationResolvers["createUser"] = async ({
 
   try {
     user = await userModel.findOne(
-      userData.email.toLowerCase()
+      userData.email
         ? {
             email: userData.email.toLowerCase(),
           }
-        : { phoneNumber: userData.phoneNumber.toLowerCase() }
+        : { phoneNumber: userData.phoneNumber }
     );
   } catch (e) {
     console.log(e);
