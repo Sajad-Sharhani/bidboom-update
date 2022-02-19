@@ -15,7 +15,7 @@ export type Scalars = {
 };
 
 export type Comment = {
-  author: Scalars['ID'];
+  author?: Maybe<Scalars['ID']>;
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
 };
@@ -246,6 +246,7 @@ export enum PlaceRecord {
 export type Query = {
   getPath: PathType;
   getPaths: Array<PathType>;
+  getComments?: Maybe<Array<Maybe<Comment>>>;
   getCity: Array<Locality>;
   getProvince: Array<Locality>;
   getCountry: Array<Locality>;
@@ -260,6 +261,11 @@ export type QueryGetPathArgs = {
 
 
 export type QueryGetPathsArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type QueryGetCommentsArgs = {
   input: Scalars['ID'];
 };
 
@@ -441,7 +447,7 @@ export type ResolversParentTypes = {
 };
 
 export type CommentResolvers<ContextType = any, ParentType extends ResolversParentTypes['Comment'] = ResolversParentTypes['Comment']> = {
-  author?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -560,6 +566,7 @@ export type PlaceResolvers<ContextType = any, ParentType extends ResolversParent
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   getPath?: Resolver<ResolversTypes['PathType'], ParentType, ContextType, RequireFields<QueryGetPathArgs, 'input'>>;
   getPaths?: Resolver<Array<ResolversTypes['PathType']>, ParentType, ContextType, RequireFields<QueryGetPathsArgs, 'input'>>;
+  getComments?: Resolver<Maybe<Array<Maybe<ResolversTypes['Comment']>>>, ParentType, ContextType, RequireFields<QueryGetCommentsArgs, 'input'>>;
   getCity?: Resolver<Array<ResolversTypes['Locality']>, ParentType, ContextType>;
   getProvince?: Resolver<Array<ResolversTypes['Locality']>, ParentType, ContextType>;
   getCountry?: Resolver<Array<ResolversTypes['Locality']>, ParentType, ContextType>;

@@ -72,7 +72,7 @@ input PlaceInput {
 }
 
 type Comment {
-  author: ID!
+  author: ID
   description: String!
   id: ID
 }
@@ -206,6 +206,7 @@ extend type Query {
   getPath(input: ID!): PathType!
   # user id
   getPaths(input: ID!): [PathType!]!
+  getComments(input: ID!): [Comment]
   getCity: [Locality!]!
   getProvince: [Locality!]!
   getCountry: [Locality!]!

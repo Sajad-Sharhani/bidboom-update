@@ -142,6 +142,32 @@ const getPaths = async (
   });
 };
 
+const getComments = async (
+  { input }: QueryGetPathsArgs,
+  { _id }: { _id: string | null }
+) => {
+  let user: any;
+  console.log(input);
+
+  try {
+    user = await authenticate(_id);
+  } catch {}
+  let path;
+  try {
+    path = await pathModel.findById(input);
+  } catch {
+    throw new Error(errors[17].id);
+  }
+  console.log("first", path.comments);
+  return path.comments.map((path) => {
+    return {
+      author: path?.author,
+      description: path?.description,
+      id: path?.id,
+    };
+  });
+};
+
 const likePath = async (
   { input }: MutationLikePathArgs,
   { _id }: { _id: string | null }
@@ -438,6 +464,7 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   deletePath: deletePath as any,
   getPath: getPath as any,
   getPaths: getPaths as any,
+  getComments: getComments as any,
   getCity: () => cities.filter((i) => i.id === 17) as any,
   getProvince: () => provinces.filter((i) => i.id === 17) as any,
   getCountry: () => countries as any,
