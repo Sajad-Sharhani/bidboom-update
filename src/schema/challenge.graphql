@@ -69,6 +69,18 @@ type GetChallengeType {
   loosersNumber: Int
 }
 
+type GetChallenge {
+  subject: String
+  description: String
+  answers: [String!]
+  sponsors: [Sponsor]
+  isActive: Boolean
+  media: [Files_challenge]
+  winnersNumber: Int
+  loosersNumber: Int
+  answer: Int
+}
+
 type GetChallengersSuperAdmin {
   winners: [Challenger]
   loosers: [Challenger]
@@ -80,7 +92,7 @@ input GetChallengersSuperAdminInput {
 }
 
 extend type Query {
-  getChallenge: GetChallengeType!
+  getChallenge(input: ID!): GetChallenge!
   getChallengesSuperAdmin: [GetChallengeType]!
   # input: challenge id
   getChallengersSuperAdmin(
@@ -100,9 +112,14 @@ type IsAnswerRight {
   correct: Boolean
 }
 
+input SendAnswerInput {
+  answer: Int!
+  challenge: ID!
+}
+
 extend type Mutation {
   createChallenge(input: CreateChallengeInput!): GetChallengeType!
   disableChallenge(input: ID!): GetChallengeType!
   deleteChallenge(input: ID!): GetChallengeType!
-  sendAnswer(input: Int): IsAnswerRight!
+  sendAnswer(input: SendAnswerInput!): IsAnswerRight!
 }

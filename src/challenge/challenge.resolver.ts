@@ -7,11 +7,14 @@ import {
   IsAnswerRight,
   GetChallengersSuperAdmin,
   GetChallengersSuperAdminInput,
+  SendAnswerInput,
+  GetChallenge,
 } from "../schema/challenge";
 import errors from "../schema/errors";
 import { UserType } from "../schema/user";
 import { authenticate, multiAuthenticate } from "../utils/index";
 import challengeModel, { challengerModel } from "./challenge.model";
+import { AnyARecord } from "dns";
 
 const createChallenge = async (
   { input }: MutationCreateChallengeArgs,
@@ -41,31 +44,53 @@ const createChallenge = async (
 };
 
 const getChallenge = async (
-  _: any,
+  { input }: { input: string },
   { _id }: { _id: string | null }
-): Promise<GetChallengeType> => {
+): Promise<GetChallenge> => {
+  await authenticate(_id, UserType["SuperAdmin"]);
   let challenge;
+  let challenger;
   try {
-    challenge = await challengeModel.findOne({ isActive: true });
+    challenge = await challengeModel.findOne({ isActive: true, _id: input });
     if (!challenge) {
       throw new Error();
     }
+    challenger = await challengerModel.findOne({
+      challenge: challenge._id,
+      challenger: _id,
+    });
   } catch {
     throw new Error(errors[22].id);
   }
+  console.log(challenge);
+  console.log(challenger.answer);
 
-  return challenge.toObject();
+  return {
+    subject: challenge?.subject,
+    description: challenge?.description,
+    answers: challenge?.answers,
+    sponsors: challenge?.sponsors,
+    isActive: challenge?.isActive,
+    media: challenge?.media,
+    winnersNumber: challenge?.winnersNumber,
+    loosersNumber: challenge?.loosersNumber,
+    answer: challenger?.answer,
+  };
 };
 
 const sendAnswer = async (
-  { input }: MutationSendAnswerArgs,
+  { input }: { input: SendAnswerInput },
   { _id }: { _id: string | null }
 ): Promise<IsAnswerRight> => {
-  await multiAuthenticate(_id);
+  await authenticate(_id, UserType["SuperAdmin"]);
 
   let challenge;
   try {
-    challenge = await challengeModel.findOne({ isActive: true });
+    challenge = await challengeModel.findOne({
+      isActive: true,
+      _id: input.challenge,
+    });
+    console.log(challenge);
   } catch {
     throw new Error(errors[22].id);
   }
@@ -76,13 +101,18 @@ const sendAnswer = async (
     throw new Error(errors[23].id);
 
   let correct = false;
-  if (input === challenge.correct) {
+  if (input.answer === challenge.correct) {
     correct = true;
     await challenge.updateOne({ winnersNumber: challenge.winnersNumber + 1 });
   } else {
     await challenge.updateOne({ loosersNumber: challenge.loosersNumber + 1 });
   }
-  await challengerModel.create({ answer: input, challenger: _id, correct });
+  await challengerModel.create({
+    answer: input.answer,
+    challenger: _id,
+    correct,
+    challenge: challenge._id,
+  });
 
   return { correct };
 };

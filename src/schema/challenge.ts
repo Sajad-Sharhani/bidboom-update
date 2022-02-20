@@ -71,6 +71,18 @@ export type Files_ChallengeInput = {
   files: Array<Maybe<File_ChallengeInput>>;
 };
 
+export type GetChallenge = {
+  subject?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']>;
+  answers?: Maybe<Array<Scalars['String']>>;
+  sponsors?: Maybe<Array<Maybe<Sponsor>>>;
+  isActive?: Maybe<Scalars['Boolean']>;
+  media?: Maybe<Array<Maybe<Files_Challenge>>>;
+  winnersNumber?: Maybe<Scalars['Int']>;
+  loosersNumber?: Maybe<Scalars['Int']>;
+  answer?: Maybe<Scalars['Int']>;
+};
+
 export type GetChallengeType = {
   subject?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -121,18 +133,28 @@ export type MutationDeleteChallengeArgs = {
 
 
 export type MutationSendAnswerArgs = {
-  input?: Maybe<Scalars['Int']>;
+  input: SendAnswerInput;
 };
 
 export type Query = {
-  getChallenge: GetChallengeType;
+  getChallenge: GetChallenge;
   getChallengesSuperAdmin: Array<Maybe<GetChallengeType>>;
   getChallengersSuperAdmin: GetChallengersSuperAdmin;
 };
 
 
+export type QueryGetChallengeArgs = {
+  input: Scalars['ID'];
+};
+
+
 export type QueryGetChallengersSuperAdminArgs = {
   input: GetChallengersSuperAdminInput;
+};
+
+export type SendAnswerInput = {
+  answer: Scalars['Int'];
+  challenge: Scalars['ID'];
 };
 
 export type Sponsor = {
@@ -242,12 +264,14 @@ export type ResolversTypes = {
   File_challengeInput: File_ChallengeInput;
   Files_challenge: ResolverTypeWrapper<Files_Challenge>;
   Files_challengeInput: Files_ChallengeInput;
+  GetChallenge: ResolverTypeWrapper<GetChallenge>;
   GetChallengeType: ResolverTypeWrapper<GetChallengeType>;
   GetChallengersSuperAdmin: ResolverTypeWrapper<GetChallengersSuperAdmin>;
   GetChallengersSuperAdminInput: GetChallengersSuperAdminInput;
   IsAnswerRight: ResolverTypeWrapper<IsAnswerRight>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
+  SendAnswerInput: SendAnswerInput;
   Sponsor: ResolverTypeWrapper<Sponsor>;
   SponsorInput: SponsorInput;
 };
@@ -266,12 +290,14 @@ export type ResolversParentTypes = {
   File_challengeInput: File_ChallengeInput;
   Files_challenge: Files_Challenge;
   Files_challengeInput: Files_ChallengeInput;
+  GetChallenge: GetChallenge;
   GetChallengeType: GetChallengeType;
   GetChallengersSuperAdmin: GetChallengersSuperAdmin;
   GetChallengersSuperAdminInput: GetChallengersSuperAdminInput;
   IsAnswerRight: IsAnswerRight;
   Mutation: {};
   Query: {};
+  SendAnswerInput: SendAnswerInput;
   Sponsor: Sponsor;
   SponsorInput: SponsorInput;
 };
@@ -321,6 +347,19 @@ export type Files_ChallengeResolvers<ContextType = any, ParentType extends Resol
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type GetChallengeResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetChallenge'] = ResolversParentTypes['GetChallenge']> = {
+  subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  answers?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
+  sponsors?: Resolver<Maybe<Array<Maybe<ResolversTypes['Sponsor']>>>, ParentType, ContextType>;
+  isActive?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  media?: Resolver<Maybe<Array<Maybe<ResolversTypes['Files_challenge']>>>, ParentType, ContextType>;
+  winnersNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  loosersNumber?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  answer?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type GetChallengeTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetChallengeType'] = ResolversParentTypes['GetChallengeType']> = {
   subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -348,11 +387,11 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   createChallenge?: Resolver<ResolversTypes['GetChallengeType'], ParentType, ContextType, RequireFields<MutationCreateChallengeArgs, 'input'>>;
   disableChallenge?: Resolver<ResolversTypes['GetChallengeType'], ParentType, ContextType, RequireFields<MutationDisableChallengeArgs, 'input'>>;
   deleteChallenge?: Resolver<ResolversTypes['GetChallengeType'], ParentType, ContextType, RequireFields<MutationDeleteChallengeArgs, 'input'>>;
-  sendAnswer?: Resolver<ResolversTypes['IsAnswerRight'], ParentType, ContextType, RequireFields<MutationSendAnswerArgs, never>>;
+  sendAnswer?: Resolver<ResolversTypes['IsAnswerRight'], ParentType, ContextType, RequireFields<MutationSendAnswerArgs, 'input'>>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getChallenge?: Resolver<ResolversTypes['GetChallengeType'], ParentType, ContextType>;
+  getChallenge?: Resolver<ResolversTypes['GetChallenge'], ParentType, ContextType, RequireFields<QueryGetChallengeArgs, 'input'>>;
   getChallengesSuperAdmin?: Resolver<Array<Maybe<ResolversTypes['GetChallengeType']>>, ParentType, ContextType>;
   getChallengersSuperAdmin?: Resolver<ResolversTypes['GetChallengersSuperAdmin'], ParentType, ContextType, RequireFields<QueryGetChallengersSuperAdminArgs, 'input'>>;
 };
@@ -370,6 +409,7 @@ export type Resolvers<ContextType = any> = {
   Challenger?: ChallengerResolvers<ContextType>;
   File_challenge?: File_ChallengeResolvers<ContextType>;
   Files_challenge?: Files_ChallengeResolvers<ContextType>;
+  GetChallenge?: GetChallengeResolvers<ContextType>;
   GetChallengeType?: GetChallengeTypeResolvers<ContextType>;
   GetChallengersSuperAdmin?: GetChallengersSuperAdminResolvers<ContextType>;
   IsAnswerRight?: IsAnswerRightResolvers<ContextType>;

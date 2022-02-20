@@ -107,7 +107,7 @@ const createUser: MutationResolvers["createUser"] = async ({
 const resolveIdentifierCode = async (identifierCode: string, _id: any) => {
   Promise.resolve().then(async () => {
     const hostUser = await userModel.findOne({ identifierCode });
-    hostUser.update({ ICUsers: [...(hostUser.ICUsers || []), _id] });
+    hostUser?.update({ ICUsers: [...(hostUser.ICUsers || []), _id] });
   });
 };
 
