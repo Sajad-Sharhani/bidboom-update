@@ -3,7 +3,7 @@
   "app": "bidboom",
   "port": 8080,
   "node": {
-    "version": "latest"
+    "version": "16.2.0"
   },
   "disks": [
     {
