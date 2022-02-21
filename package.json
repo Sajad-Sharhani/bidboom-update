@@ -13,6 +13,7 @@
     "@types/nodemailer": "^6.4.0",
     "@types/nodemailer-smtp-transport": "^2.7.5",
     "@types/redis": "^2.8.32",
+    "@types/superagent": "4.1.14",
     "@types/uniqid": "^5.3.1",
     "altair-express-middleware": "^4.4.0",
     "apollo-client": "^2.6.10",
