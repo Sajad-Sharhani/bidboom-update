@@ -59,6 +59,7 @@ type ChallengeType {
 }
 
 type GetChallengeType {
+  id: ID!
   subject: String
   description: String
   answers: [String!]

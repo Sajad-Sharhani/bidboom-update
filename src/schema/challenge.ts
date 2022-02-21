@@ -84,6 +84,7 @@ export type GetChallenge = {
 };
 
 export type GetChallengeType = {
+  id: Scalars['ID'];
   subject?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   answers?: Maybe<Array<Scalars['String']>>;
@@ -361,6 +362,7 @@ export type GetChallengeResolvers<ContextType = any, ParentType extends Resolver
 };
 
 export type GetChallengeTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetChallengeType'] = ResolversParentTypes['GetChallengeType']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   answers?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
