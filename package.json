@@ -69,7 +69,6 @@
     "@types/morgan": "^1.9.2",
     "@types/node": "14.18.2",
     "@types/shortid": "^0.0.29",
-    "@types/supertest": "^2.0.11",
     "apollo-boost": "^0.4.9",
     "concurrently": "^6.1.0",
     "cross-fetch": "^3.1.4",
@@ -81,7 +80,6 @@
     "prettier": "^2.2.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "supertest": "^4.0.2",
     "ts-jest": "^27.0.5"
   },
   "scripts": {
