@@ -18,7 +18,7 @@ export type Comment = {
   author?: Maybe<Scalars['ID']>;
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
-  userName?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['String']>;
   image?: Maybe<Scalars['String']>;
 };
@@ -457,7 +457,7 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
   author?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
-  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

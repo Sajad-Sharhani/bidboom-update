@@ -164,7 +164,7 @@ const getComments = async (
       author: path?.author,
       description: path?.description,
       id: path?.id,
-      userName: path?.userName,
+      name: path?.name,
       image: path?.image,
       createdAt: path?.createdAt,
     };

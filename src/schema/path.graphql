@@ -75,7 +75,7 @@ type Comment {
   author: ID
   description: String!
   id: ID
-  userName: String
+  name: String
   createdAt: String
   image: String
 }

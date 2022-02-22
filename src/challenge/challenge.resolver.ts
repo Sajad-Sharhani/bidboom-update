@@ -44,14 +44,13 @@ const createChallenge = async (
 };
 
 const getChallenge = async (
-  { input }: { input: string },
+  _: any,
   { _id }: { _id: string | null }
 ): Promise<GetChallenge> => {
-  await authenticate(_id, UserType["SuperAdmin"]);
   let challenge;
   let challenger;
   try {
-    challenge = await challengeModel.findOne({ isActive: true, _id: input });
+    challenge = await challengeModel.findOne({ isActive: true });
     if (!challenge) {
       throw new Error();
     }
@@ -62,8 +61,6 @@ const getChallenge = async (
   } catch {
     throw new Error(errors[22].id);
   }
-  console.log(challenge);
-  console.log(challenger.answer);
 
   return {
     subject: challenge?.subject,

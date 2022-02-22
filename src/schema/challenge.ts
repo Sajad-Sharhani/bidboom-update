@@ -144,11 +144,6 @@ export type Query = {
 };
 
 
-export type QueryGetChallengeArgs = {
-  input: Scalars['ID'];
-};
-
-
 export type QueryGetChallengersSuperAdminArgs = {
   input: GetChallengersSuperAdminInput;
 };
@@ -393,7 +388,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  getChallenge?: Resolver<ResolversTypes['GetChallenge'], ParentType, ContextType, RequireFields<QueryGetChallengeArgs, 'input'>>;
+  getChallenge?: Resolver<ResolversTypes['GetChallenge'], ParentType, ContextType>;
   getChallengesSuperAdmin?: Resolver<Array<Maybe<ResolversTypes['GetChallengeType']>>, ParentType, ContextType>;
   getChallengersSuperAdmin?: Resolver<ResolversTypes['GetChallengersSuperAdmin'], ParentType, ContextType, RequireFields<QueryGetChallengersSuperAdminArgs, 'input'>>;
 };

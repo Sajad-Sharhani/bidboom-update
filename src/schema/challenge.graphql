@@ -93,7 +93,7 @@ input GetChallengersSuperAdminInput {
 }
 
 extend type Query {
-  getChallenge(input: ID!): GetChallenge!
+  getChallenge: GetChallenge!
   getChallengesSuperAdmin: [GetChallengeType]!
   # input: challenge id
   getChallengersSuperAdmin(
