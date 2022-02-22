@@ -22,6 +22,7 @@ import countries from "../statics/country";
 import provinces from "../statics/province";
 import { getUnique } from "../utils/hash";
 import { authenticate } from "../utils/index";
+import userModel from "./../user/user.model";
 import pathModel from "./path.model";
 
 const defaultPath: PathType = { views: 0, likesNumber: 0 } as PathType;
@@ -86,7 +87,6 @@ const getPath = async (
     archived = false;
   try {
     user = await authenticate(_id);
-    archived = user.archives.includes(_id) || false;
   } catch {}
   let path;
   try {
@@ -95,6 +95,10 @@ const getPath = async (
   } catch {
     throw new Error(errors[17].id);
   }
+  try {
+    let users = await userModel.findById(_id);
+    archived = users?.archives.includes(input) || false;
+  } catch {}
 
   try {
     liked = path.likes.includes(user._id) || false;
