@@ -265,7 +265,7 @@ const commentPath = async (
           author: _id,
           description: input.description,
           id: commentId,
-          userName: user.userName,
+          name: user.name,
           image: user?.image,
           createdAt: new Date().toLocaleString(),
         },
