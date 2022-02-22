@@ -75,6 +75,9 @@ type Comment {
   author: ID
   description: String!
   id: ID
+  userName: String
+  createdAt: String
+  image: String
 }
 interface Path {
   _id: ID!
@@ -216,8 +219,12 @@ extend type Query {
 
 type CommentPathResponse {
   path: ID!
+  author: String
   description: String!
   id: ID!
+  userName: String
+  createdAt: String
+  image: String
 }
 input CommentPathInput {
   path: ID!

@@ -164,6 +164,9 @@ const getComments = async (
       author: path?.author,
       description: path?.description,
       id: path?.id,
+      userName: path?.userName,
+      image: path?.image,
+      createdAt: path?.createdAt,
     };
   });
 };
@@ -262,6 +265,9 @@ const commentPath = async (
           author: _id,
           description: input.description,
           id: commentId,
+          userName: user.userName,
+          image: user?.image,
+          createdAt: new Date().toLocaleString(),
         },
       ],
     });
@@ -273,6 +279,10 @@ const commentPath = async (
     path: input.path,
     description: input.description,
     id: commentId,
+    userName: user.userName,
+    image: user?.image,
+    createdAt: new Date().toLocaleString(),
+    author: _id,
   };
 };
 

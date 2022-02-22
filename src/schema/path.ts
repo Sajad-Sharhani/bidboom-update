@@ -18,6 +18,9 @@ export type Comment = {
   author?: Maybe<Scalars['ID']>;
   description: Scalars['String'];
   id?: Maybe<Scalars['ID']>;
+  userName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
 };
 
 export type CommentPathInput = {
@@ -27,8 +30,12 @@ export type CommentPathInput = {
 
 export type CommentPathResponse = {
   path: Scalars['ID'];
+  author?: Maybe<Scalars['String']>;
   description: Scalars['String'];
   id: Scalars['ID'];
+  userName?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
 };
 
 export type CreatePathInput = {
@@ -450,13 +457,20 @@ export type CommentResolvers<ContextType = any, ParentType extends ResolversPare
   author?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type CommentPathResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['CommentPathResponse'] = ResolversParentTypes['CommentPathResponse']> = {
   path?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  userName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  createdAt?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
