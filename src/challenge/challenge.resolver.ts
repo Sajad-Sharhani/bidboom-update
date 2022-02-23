@@ -63,6 +63,7 @@ const getChallenge = async (
   }
 
   return {
+    _id: challenge._id,
     subject: challenge?.subject,
     description: challenge?.description,
     answers: challenge?.answers,

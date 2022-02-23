@@ -72,6 +72,7 @@ export type Files_ChallengeInput = {
 };
 
 export type GetChallenge = {
+  _id?: Maybe<Scalars['ID']>;
   subject?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   answers?: Maybe<Array<Scalars['String']>>;
@@ -344,6 +345,7 @@ export type Files_ChallengeResolvers<ContextType = any, ParentType extends Resol
 };
 
 export type GetChallengeResolvers<ContextType = any, ParentType extends ResolversParentTypes['GetChallenge'] = ResolversParentTypes['GetChallenge']> = {
+  _id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   subject?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   answers?: Resolver<Maybe<Array<ResolversTypes['String']>>, ParentType, ContextType>;
