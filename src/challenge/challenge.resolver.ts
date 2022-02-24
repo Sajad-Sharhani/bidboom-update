@@ -80,7 +80,7 @@ const sendAnswer = async (
   { input }: { input: SendAnswerInput },
   { _id }: { _id: string | null }
 ): Promise<IsAnswerRight> => {
-  await authenticate(_id, UserType["SuperAdmin"]);
+  await multiAuthenticate(_id);
 
   let challenge;
   try {
