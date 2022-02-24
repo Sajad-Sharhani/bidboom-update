@@ -8,8 +8,8 @@ export const getKavenegarApi = () => {
 };
 
 export const sendMessage = async (data: {
-  message: string;
-  sender: number;
+  token: string;
+  template: string;
   receptor: string;
 }): Promise<{
   entries?: kavenegar.IEntrie[];
@@ -19,7 +19,7 @@ export const sendMessage = async (data: {
   const kavenegarApi = getKavenegarApi();
 
   return new Promise((res) => {
-    kavenegarApi.Send(data, (entries, status, message) => {
+    kavenegarApi.VerifyLookup(data, (entries, status, message) => {
       res({ entries, status, message });
     });
   });
