@@ -103,7 +103,7 @@ const getPath = async (
   try {
     liked = path.likes.includes(user._id) || false;
   } catch {}
-
+  let maker = await userModel.findById(path?.maker);
   return {
     ...defaultPath,
     ...path.toObject(),
@@ -112,6 +112,8 @@ const getPath = async (
     liked,
     commentsNumber: path?.comments.length || 0,
     likesNumber: path?.likes.length || 0,
+    name: maker?.name,
+    image: maker?.image,
   };
 };
 

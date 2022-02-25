@@ -108,6 +108,8 @@ interface Path {
 type PathType {
   _id: ID!
   maker: ID!
+  name: String
+  image: String
   # lng lat
   originPoint: String
   destinationPoint: String

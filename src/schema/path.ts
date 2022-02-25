@@ -201,6 +201,8 @@ export type Path = {
 export type PathType = {
   _id: Scalars['ID'];
   maker: Scalars['ID'];
+  name?: Maybe<Scalars['String']>;
+  image?: Maybe<Scalars['String']>;
   originPoint?: Maybe<Scalars['String']>;
   destinationPoint?: Maybe<Scalars['String']>;
   origin?: Maybe<Scalars['String']>;
@@ -546,6 +548,8 @@ export type PathResolvers<ContextType = any, ParentType extends ResolversParentT
 export type PathTypeResolvers<ContextType = any, ParentType extends ResolversParentTypes['PathType'] = ResolversParentTypes['PathType']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   maker?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   originPoint?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   destinationPoint?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   origin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
