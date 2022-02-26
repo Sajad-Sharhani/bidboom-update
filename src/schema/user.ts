@@ -168,7 +168,6 @@ export type Query = {
   getUserInfo: GetUserInfoResponse;
   getNotifications: Array<Maybe<Notification>>;
   getPopularAmbassadors: Array<Maybe<User_Type>>;
-  getArchives: Array<Maybe<Scalars['ID']>>;
 };
 
 
@@ -469,7 +468,6 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, never>>;
   getPopularAmbassadors?: Resolver<Array<Maybe<ResolversTypes['User_type']>>, ParentType, ContextType>;
-  getArchives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
 };
 
 export type ResetIdentifierCodeResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResetIdentifierCodeResponse'] = ResolversParentTypes['ResetIdentifierCodeResponse']> = {

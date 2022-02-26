@@ -217,6 +217,7 @@ extend type Query {
   getCountry: [Locality!]!
   getPopularPaths: [PathType!]!
   searchPath(input: SearchPathInput): [PathType]!
+  getArchives: [PathType]!
 }
 
 type CommentPathResponse {

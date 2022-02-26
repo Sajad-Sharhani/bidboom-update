@@ -261,6 +261,7 @@ export type Query = {
   getCountry: Array<Locality>;
   getPopularPaths: Array<PathType>;
   searchPath: Array<Maybe<PathType>>;
+  getArchives: Array<Maybe<PathType>>;
 };
 
 
@@ -590,6 +591,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getCountry?: Resolver<Array<ResolversTypes['Locality']>, ParentType, ContextType>;
   getPopularPaths?: Resolver<Array<ResolversTypes['PathType']>, ParentType, ContextType>;
   searchPath?: Resolver<Array<Maybe<ResolversTypes['PathType']>>, ParentType, ContextType, RequireFields<QuerySearchPathArgs, never>>;
+  getArchives?: Resolver<Array<Maybe<ResolversTypes['PathType']>>, ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {

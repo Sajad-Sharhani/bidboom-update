@@ -16,7 +16,7 @@ import {
   RemoveCommentPath,
   QuerySearchPathArgs,
 } from "../schema/path";
-import { UserType } from "../schema/user";
+import { User, UserType } from "../schema/user";
 import cities from "../statics/city";
 import countries from "../statics/country";
 import provinces from "../statics/province";
@@ -24,6 +24,7 @@ import { getUnique } from "../utils/hash";
 import { authenticate } from "../utils/index";
 import userModel from "./../user/user.model";
 import pathModel from "./path.model";
+import { Document } from "mongoose";
 
 const defaultPath: PathType = { views: 0, likesNumber: 0 } as PathType;
 
@@ -474,6 +475,26 @@ const getPopularPaths = async (_: any, { _id }: { _id: string | null }) => {
   }));
 };
 
+const getArchives = async (_: any, { _id }: { _id: string | null }) => {
+  let user: User & Document<any, any, any>;
+  try {
+    user = await userModel.findById(_id);
+  } catch {
+    throw new Error(errors[1].id);
+  }
+  const records = await pathModel.find({ _id: { $in: user?.archives } });
+  console.log(records);
+  return records.map((p) => ({
+    ...defaultPath,
+    ...p.toObject(),
+    views: p?.views.length || 0,
+    archived: user?.archives?.includes(_id) || false,
+    liked: !!p?.likes.includes(_id),
+    commentsNumber: p?.comments.length || 0,
+    likesNumber: p?.likes.length || 0,
+  }));
+};
+
 export const resolvers: MutationResolvers | QueryResolvers = {
   createPath: createPath as any,
   mutatePath: mutatePath as any,
@@ -492,4 +513,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   removeCommentPath: removeCommentPath as any,
   searchPath: searchPath as any,
   getPopularPaths: getPopularPaths as any,
+  getArchives: getArchives as any,
 };

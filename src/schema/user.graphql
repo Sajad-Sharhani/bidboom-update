@@ -189,7 +189,6 @@ extend type Query {
   getUserInfo(input: ID!): GetUserInfoResponse!
   getNotifications(input: UserType): [Notification]!
   getPopularAmbassadors: [User_type]!
-  getArchives: [ID]!
 }
 
 type ResetIdentifierCodeResponse {
