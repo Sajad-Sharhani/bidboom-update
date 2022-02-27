@@ -14,7 +14,6 @@ import errors from "../schema/errors";
 import { UserType } from "../schema/user";
 import { authenticate, multiAuthenticate } from "../utils/index";
 import challengeModel, { challengerModel } from "./challenge.model";
-import { AnyARecord } from "dns";
 
 const createChallenge = async (
   { input }: MutationCreateChallengeArgs,

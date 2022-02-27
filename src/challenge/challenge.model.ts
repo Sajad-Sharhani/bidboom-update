@@ -6,7 +6,7 @@ const challengeSchema = new mongoose.Schema(
     subject: String,
     description: String,
     answers: { type: Array, required: false },
-    correct: { type: Array, required: false },
+    correct: { type: Number, required: false },
     sponsors: { type: Array, required: false },
     isActive: { type: Boolean, required: false },
     media: { type: Object, required: false },
