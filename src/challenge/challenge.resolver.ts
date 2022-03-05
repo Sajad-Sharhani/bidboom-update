@@ -153,7 +153,7 @@ const disableChallenge = async (
 };
 
 const deleteChallenge = async (
-  { input }: { input: string },
+  input: string,
   { _id }: { _id: string | null }
 ): Promise<GetChallengeType> => {
   await authenticate(_id, UserType["SuperAdmin"]);
