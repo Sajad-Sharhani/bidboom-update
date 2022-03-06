@@ -58,7 +58,7 @@ const getChallenge = async (
       challenger: _id,
     });
   } catch {
-    throw new Error(errors[22].id);
+    return {};
   }
 
   return {
