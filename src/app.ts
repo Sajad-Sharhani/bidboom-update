@@ -13,6 +13,7 @@ import { verifyToken } from "./utils/hash";
 import { makeExecutableSchema } from "@graphql-tools/schema";
 import { altairExpress } from "altair-express-middleware";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 import express from "express";
 import { graphqlHTTP } from "express-graphql";
 import { GraphQLUpload } from "graphql-upload";
@@ -56,6 +57,8 @@ class App {
 
   private initializeControllers(resolvers: Resolvers) {
     const schema = makeExecutableSchema({ typeDefs });
+
+    this.app.use(cors());
 
     this.app.use((req, res, next) => {
       let header = req.headers["authorization"] || "";
