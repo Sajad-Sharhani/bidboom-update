@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
     guideType: StringNonRequired,
     expertise: StringNonRequired,
     registerations: StringNonRequired,
+    isAmbassador: { type: Boolean, default: false },
     ICUsers: { type: Array, required: false },
     archives: { type: Array, required: false },
     points: { type: Number, required: false },

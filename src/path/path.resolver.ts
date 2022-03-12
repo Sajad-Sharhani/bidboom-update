@@ -32,18 +32,22 @@ const createPath = async (
   { input }: MutationCreatePathArgs,
   { _id }: { _id: string | null }
 ): Promise<CreatePathResponse> => {
-  await authenticate(_id);
+  const user = await authenticate(_id);
   let path;
-  try {
-    path = await pathModel.create({
-      ...input,
-      maker: _id,
-      views: [],
-      likes: [],
-      comments: [],
-    });
-  } catch {
-    throw new Error(errors[14].id);
+  if (user.isAmbassador) {
+    try {
+      path = await pathModel.create({
+        ...input,
+        maker: _id,
+        views: [],
+        likes: [],
+        comments: [],
+      });
+    } catch {
+      throw new Error(errors[14].id);
+    }
+  } else {
+    throw new Error(errors[25].id);
   }
 
   return { _id: path._id };

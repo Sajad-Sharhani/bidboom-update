@@ -114,6 +114,7 @@ export type Mutation = {
   mutateAmbassador: Response;
   sendNotification: NotificationResponse;
   resetIdentifierCode: ResetIdentifierCodeResponse;
+  activateAmbassador: User_Type;
 };
 
 
@@ -146,6 +147,11 @@ export type MutationSendNotificationArgs = {
   input?: Maybe<NotificationInput>;
 };
 
+
+export type MutationActivateAmbassadorArgs = {
+  input: Scalars['ID'];
+};
+
 export type Notification = {
   title: Scalars['String'];
   description: Scalars['String'];
@@ -168,6 +174,7 @@ export type Query = {
   getUserInfo: GetUserInfoResponse;
   getNotifications: Array<Maybe<Notification>>;
   getPopularAmbassadors: Array<Maybe<User_Type>>;
+  getAmbassadors: Array<Maybe<User_Type>>;
 };
 
 
@@ -226,6 +233,7 @@ export type User = {
   identifierCode?: Maybe<Scalars['String']>;
   ICUsers: Array<Maybe<Scalars['ID']>>;
   type: UserType;
+  isAmbassador?: Maybe<Scalars['Boolean']>;
   registerations?: Maybe<Registerations>;
   archives: Array<Maybe<Scalars['ID']>>;
   points: Scalars['Int'];
@@ -250,6 +258,7 @@ export type User_Type = {
   description?: Maybe<Scalars['String']>;
   ICUsers: Array<Maybe<Scalars['ID']>>;
   type: UserType;
+  isAmbassador?: Maybe<Scalars['Boolean']>;
   archives: Array<Maybe<Scalars['ID']>>;
 };
 
@@ -449,6 +458,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   mutateAmbassador?: Resolver<ResolversTypes['Response'], ParentType, ContextType, RequireFields<MutationMutateAmbassadorArgs, never>>;
   sendNotification?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<MutationSendNotificationArgs, never>>;
   resetIdentifierCode?: Resolver<ResolversTypes['ResetIdentifierCodeResponse'], ParentType, ContextType>;
+  activateAmbassador?: Resolver<ResolversTypes['User_type'], ParentType, ContextType, RequireFields<MutationActivateAmbassadorArgs, 'input'>>;
 };
 
 export type NotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {
@@ -468,6 +478,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   getUserInfo?: Resolver<ResolversTypes['GetUserInfoResponse'], ParentType, ContextType, RequireFields<QueryGetUserInfoArgs, 'input'>>;
   getNotifications?: Resolver<Array<Maybe<ResolversTypes['Notification']>>, ParentType, ContextType, RequireFields<QueryGetNotificationsArgs, never>>;
   getPopularAmbassadors?: Resolver<Array<Maybe<ResolversTypes['User_type']>>, ParentType, ContextType>;
+  getAmbassadors?: Resolver<Array<Maybe<ResolversTypes['User_type']>>, ParentType, ContextType>;
 };
 
 export type ResetIdentifierCodeResponseResolvers<ContextType = any, ParentType extends ResolversParentTypes['ResetIdentifierCodeResponse'] = ResolversParentTypes['ResetIdentifierCodeResponse']> = {
@@ -506,6 +517,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   identifierCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  isAmbassador?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   registerations?: Resolver<Maybe<ResolversTypes['Registerations']>, ParentType, ContextType>;
   archives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   points?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -524,6 +536,7 @@ export type User_TypeResolvers<ContextType = any, ParentType extends ResolversPa
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   ICUsers?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   type?: Resolver<ResolversTypes['UserType'], ParentType, ContextType>;
+  isAmbassador?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   archives?: Resolver<Array<Maybe<ResolversTypes['ID']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

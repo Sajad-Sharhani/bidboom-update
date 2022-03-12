@@ -31,6 +31,7 @@ interface User {
   identifierCode: String
   ICUsers: [ID]!
   type: UserType!
+  isAmbassador: Boolean
   registerations: Registerations
   archives: [ID]!
   points: Int!
@@ -50,6 +51,7 @@ type User_type {
   description: String
   ICUsers: [ID]!
   type: UserType!
+  isAmbassador: Boolean
   archives: [ID]!
 }
 type Response {
@@ -189,6 +191,7 @@ extend type Query {
   getUserInfo(input: ID!): GetUserInfoResponse!
   getNotifications(input: UserType): [Notification]!
   getPopularAmbassadors: [User_type]!
+  getAmbassadors: [User_type]!
 }
 
 type ResetIdentifierCodeResponse {
@@ -203,4 +206,5 @@ extend type Mutation {
   mutateAmbassador(input: MutateAmbassadorInput): Response!
   sendNotification(input: NotificationInput): NotificationResponse!
   resetIdentifierCode: ResetIdentifierCodeResponse!
+  activateAmbassador(input: ID!): User_type!
 }

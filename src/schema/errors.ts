@@ -31,4 +31,5 @@ export default [
     description:
       "disable (isActive = false) the current challenge now, then create new one",
   },
+  { id: "25", description: "ambassador is not activated" },
 ] as const;

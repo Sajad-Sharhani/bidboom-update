@@ -366,6 +366,36 @@ const getPopularAmbassadors: QueryResolvers["getPopularAmbassadors"] =
     return users.map((u) => ({ ...u.toObject() }));
   };
 
+const getAmbassadors: QueryResolvers["getAmbassadors"] = async (
+  _: any,
+  { _id }: { _id: string | null }
+): Promise<User[]> => {
+  await authenticate(_id, UserType["SuperAdmin"]);
+  const users = await userModel.find({ type: UserType["Ambassador"] }, null, {
+    skip: 0,
+    limit: 8,
+  });
+  console.log(users.map((u) => ({ ...u.toObject(), __typename: "User" })));
+  return users.map((u) => ({ ...u.toObject() }));
+};
+
+const activateAmbassador = async (
+  { input }: { input: string },
+  { _id }: { _id: string | null }
+): Promise<User> => {
+  await authenticate(_id, UserType["SuperAdmin"]);
+
+  let user;
+  try {
+    user = await userModel.findById(input);
+  } catch {
+    throw new Error(errors[1].id);
+  }
+  await user.updateOne({ isAmbassador: true });
+
+  return user.toObject();
+};
+
 export const resolvers: MutationResolvers | QueryResolvers = {
   createUser,
   sendCode,
@@ -380,4 +410,6 @@ export const resolvers: MutationResolvers | QueryResolvers = {
 
   resetIdentifierCode: resetIdentifierCode as any,
   getPopularAmbassadors: getPopularAmbassadors as any,
+  getAmbassadors: getAmbassadors as any,
+  activateAmbassador: activateAmbassador as any,
 };
