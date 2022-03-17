@@ -25,6 +25,7 @@ const pathSchema = new mongoose.Schema(
     comments: { type: Array, required: false },
     likes: { type: Array, required: false },
     views: { type: Array, required: false },
+    isActive: { type: Boolean, default: true },
   },
   {
     toJSON: {

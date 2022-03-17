@@ -115,6 +115,7 @@ export type Mutation = {
   sendNotification: NotificationResponse;
   resetIdentifierCode: ResetIdentifierCodeResponse;
   activateAmbassador: User_Type;
+  disActivateAmbassador: User_Type;
 };
 
 
@@ -149,6 +150,11 @@ export type MutationSendNotificationArgs = {
 
 
 export type MutationActivateAmbassadorArgs = {
+  input: Scalars['ID'];
+};
+
+
+export type MutationDisActivateAmbassadorArgs = {
   input: Scalars['ID'];
 };
 
@@ -459,6 +465,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   sendNotification?: Resolver<ResolversTypes['NotificationResponse'], ParentType, ContextType, RequireFields<MutationSendNotificationArgs, never>>;
   resetIdentifierCode?: Resolver<ResolversTypes['ResetIdentifierCodeResponse'], ParentType, ContextType>;
   activateAmbassador?: Resolver<ResolversTypes['User_type'], ParentType, ContextType, RequireFields<MutationActivateAmbassadorArgs, 'input'>>;
+  disActivateAmbassador?: Resolver<ResolversTypes['User_type'], ParentType, ContextType, RequireFields<MutationDisActivateAmbassadorArgs, 'input'>>;
 };
 
 export type NotificationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Notification'] = ResolversParentTypes['Notification']> = {

@@ -357,11 +357,15 @@ const resetIdentifierCode = async (_: any, { _id }: { _id: string | null }) => {
 
 const getPopularAmbassadors: QueryResolvers["getPopularAmbassadors"] =
   async (): Promise<User[]> => {
-    const users = await userModel.find({ type: UserType["Ambassador"] }, null, {
-      skip: 0,
-      limit: 8,
-      sort: { likesNumber: 1, commentsNumber: 1 },
-    });
+    const users = await userModel.find(
+      { type: UserType["Ambassador"], isAmbassador: true },
+      null,
+      {
+        skip: 0,
+        limit: 8,
+        sort: { likesNumber: 1, commentsNumber: 1 },
+      }
+    );
     console.log(users.map((u) => ({ ...u.toObject(), __typename: "User" })));
     return users.map((u) => ({ ...u.toObject() }));
   };
@@ -386,12 +390,35 @@ const activateAmbassador = async (
   await authenticate(_id, UserType["SuperAdmin"]);
 
   let user;
+  let path;
   try {
     user = await userModel.findById(input);
+    path = await pathModel.find({ maker: input });
   } catch {
     throw new Error(errors[1].id);
   }
   await user.updateOne({ isAmbassador: true });
+  path.forEach(async (p) => await p.update({ isActive: true }));
+
+  return user.toObject();
+};
+
+const disActivateAmbassador = async (
+  { input }: { input: string },
+  { _id }: { _id: string | null }
+): Promise<User> => {
+  await authenticate(_id, UserType["SuperAdmin"]);
+
+  let user;
+  let path;
+  try {
+    user = await userModel.findById(input);
+    path = await pathModel.find({ maker: input });
+  } catch {
+    throw new Error(errors[1].id);
+  }
+  await user.updateOne({ isAmbassador: false });
+  path.forEach(async (p) => await p.update({ isActive: false }));
 
   return user.toObject();
 };
@@ -412,4 +439,5 @@ export const resolvers: MutationResolvers | QueryResolvers = {
   getPopularAmbassadors: getPopularAmbassadors as any,
   getAmbassadors: getAmbassadors as any,
   activateAmbassador: activateAmbassador as any,
+  disActivateAmbassador: disActivateAmbassador as any,
 };

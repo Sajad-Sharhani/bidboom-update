@@ -207,4 +207,5 @@ extend type Mutation {
   sendNotification(input: NotificationInput): NotificationResponse!
   resetIdentifierCode: ResetIdentifierCodeResponse!
   activateAmbassador(input: ID!): User_type!
+  disActivateAmbassador(input: ID!): User_type!
 }

@@ -431,7 +431,7 @@ const searchPath = async (
   );
 
   try {
-    paths = await pathModel.find({ ...regexSearch }, null, {
+    paths = await pathModel.find({ ...regexSearch, isActive: true }, null, {
       skip: skips,
       limit: pageSize,
     });
@@ -459,7 +459,7 @@ const getPopularPaths = async (_: any, { _id }: { _id: string | null }) => {
 
   let paths;
   try {
-    paths = await pathModel.find({}, null, {
+    paths = await pathModel.find({ isActive: true }, null, {
       skip: 0,
       limit: 8,
       sort: { likesNumber: 1, commentsNumber: 1 },
