@@ -375,10 +375,7 @@ const getAmbassadors: QueryResolvers["getAmbassadors"] = async (
   { _id }: { _id: string | null }
 ): Promise<User[]> => {
   await authenticate(_id, UserType["SuperAdmin"]);
-  const users = await userModel.find({ type: UserType["Ambassador"] }, null, {
-    skip: 0,
-    limit: 8,
-  });
+  const users = await userModel.find({ type: UserType["Ambassador"] }, null);
   console.log(users.map((u) => ({ ...u.toObject(), __typename: "User" })));
   return users.map((u) => ({ ...u.toObject() }));
 };
